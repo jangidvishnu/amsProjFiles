@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ams';
+  isAdminActive = false;
+  onAdminClick(){
+    this.isAdminActive=true;
+  }
+  onEmployeeClick(){
+    this.isAdminActive=false;
+  }
+
 }

@@ -1,22 +1,7 @@
-
-#selectionTitle{
-    text-align: center;
+.navbar{
+    background-color: silver;
 }
 .nav-link{
-    display: inline-block;
-    border-radius:3px ;
-    background-color: #d5ced5;
-    text-decoration: none;
-    text-align: center;
-    width: 5em;
-    height: 2em;
-    padding-top:0.6em;
-    font-size: 1em;
-    margin:0px 1vw;
-    color: black;
-}
-.nav-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding-top: .6rem;
+    margin-left: 1rem;
 }
