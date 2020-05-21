@@ -1,0 +1,48 @@
+.formDiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    border: 2px solid black;
+    margin:15vh auto;
+    margin-bottom: 0px;
+    max-width: 280px;
+    min-height: 50vh;
+    border-radius: 10px;
+}
+.formElement{
+    display: block;
+    margin:1rem auto;
+}
+
+.inputEle{
+    border-radius: 15px;
+    padding: 2px 15px;
+    border: 2px solid rebeccapurple;
+    width:100%;
+}
+.inputEle:focus{
+    outline: none;
+    border:3px solid salmon;
+}
+
+.btnSbmt{
+    display: block;
+    width: 100%;
+    color: black;
+    background-color: #007bff;;
+    margin: 2rem auto;
+    border-radius: 15px;
+    border:1px solid rebeccapurple;
+    height:2rem;
+}
+.btnSbmt:focus{
+    outline: none;
+}
+
+@media (max-width:400px){
+    .formDiv{
+        margin:15vh 20px;
+        margin-bottom: 0px;
+    }
+}

@@ -34,4 +34,11 @@ export class EmployeeService {
       catchError(this.errorHandler)
     );
   }
+  deleteEmployee(id:number):Observable<{}>{
+    const url=`${this.employeesUrl}/${id}`
+    return this.http.delete(url)
+    .pipe(
+      catchError(this.errorHandler)
+    );
+  }
 }

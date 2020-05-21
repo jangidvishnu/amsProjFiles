@@ -10,7 +10,7 @@ import { EmployeeService } from '../employee.service'
 export class AdminComponent implements OnInit {
 
   employees: Employee[];
-  errorMsg: String;
+  errorMsg: string;
 
   constructor(private employeeService: EmployeeService) { }
 
@@ -23,10 +23,14 @@ export class AdminComponent implements OnInit {
       .subscribe(employees => this.employees = employees,
         error => this.errorMsg = error
       );
-  };
+  }
 
   private addEmployee(employee: Employee) {
     this.employeeService.addEmployee(employee )
-      .subscribe(employeeAdded => this.employees.push(employeeAdded))
-  };
+      .subscribe(employeeAdded => this.employees.push(employeeAdded));
+  }
+  private deleteEmployee(id:number){
+    this.employeeService.deleteEmployee(id)
+    .subscribe();
+  }
 }

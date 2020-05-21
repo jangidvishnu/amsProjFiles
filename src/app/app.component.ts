@@ -13,7 +13,6 @@ export class AppComponent {
   isAdminActive = false;
   isEmployeeActive=false;
   onAdminClick(){
-    console.log(this.router.url);
     this.isAdminActive=true;
     this.isEmployeeActive=false;
   }
