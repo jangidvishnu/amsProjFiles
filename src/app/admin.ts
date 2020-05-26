@@ -1,4 +1,4 @@
 export class Admin {
-    private name:string;
-    private pass:string;
+    name:string;
+    pass:string;
 }

@@ -7,17 +7,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private router:Router){}
+
+  loggedIn = false;
+  constructor(private router: Router) { }
   title = 'ams';
   // routerUrl=this.router.url;
   isAdminActive = false;
-  isEmployeeActive=false;
-  onAdminClick(){
-    this.isAdminActive=true;
-    this.isEmployeeActive=false;
+  isEmployeeActive = false;
+  onAdminClick() {
+    this.isAdminActive = true;
+    this.isEmployeeActive = false;
   }
-  onEmployeeClick(){
-    this.isAdminActive=false;
-    this.isEmployeeActive=true;
+  onEmployeeClick() {
+    this.isAdminActive = false;
+    this.isEmployeeActive = true;
   }
 }
