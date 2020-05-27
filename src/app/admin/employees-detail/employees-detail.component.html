@@ -1,0 +1,10 @@
+<div>
+    <ul>
+        <li *ngFor="let employee of employees">
+           {{employee.id}}.  {{employee.name}}
+        </li>
+    </ul>
+</div>
+<div *ngIf="errorMsg">
+    Error Occured: {{errorMsg}}
+</div>

@@ -18,12 +18,10 @@
 .inputEle{
     border-radius: 15px;
     padding: 2px 15px;
-    border: 2px solid rebeccapurple;
     width:100%;
 }
 .inputEle:focus{
     outline: none;
-    border:3px solid salmon;
 }
 
 .btnSbmt{
@@ -38,6 +36,19 @@
 }
 .btnSbmt:focus{
     outline: none;
+}
+
+.danger{
+    border:2px solid red;
+}
+.success{
+    border: 2px solid green;
+}
+.success:focus{
+    border:3px solid green ;
+}
+.danger:focus{
+    border:3px solid red;
 }
 
 @media (max-width:400px){

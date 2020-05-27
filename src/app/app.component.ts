@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { LoginService } from './login.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,16 +10,26 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
 
-  loggedIn = false;
-  constructor(private router: Router) { }
+  constructor(private router: Router, private loginService: LoginService,
+    private activatedRoute: ActivatedRoute) { }
   title = 'ams';
   // routerUrl=this.router.url;
   isAdminActive = false;
   isEmployeeActive = false;
+
+  ngOnInit(){
+  }
+
+  logout(){
+    this.loginService.logout();
+    this.router.navigate(['']);
+  }
+
   onAdminClick() {
     this.isAdminActive = true;
     this.isEmployeeActive = false;
   }
+
   onEmployeeClick() {
     this.isAdminActive = false;
     this.isEmployeeActive = true;

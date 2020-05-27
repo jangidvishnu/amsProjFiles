@@ -4,10 +4,12 @@
             <h1 style="text-align: center;">Login</h1>
         </div>
         <div class="formElement">
-            <input class="inputEle" type="text" formControlName="name" placeholder="Name">
+            <input [class]="{'inputEle':true , 'danger':loginForm.get('name').invalid&&loginForm.get('name').touched ,
+        'success':loginForm.get('name').valid&&loginForm.get('name').touched}" type="text" formControlName="name" placeholder="Name" name="nameInput">
         </div>
         <div class="formElement">
-            <input class="inputEle" type="password" formControlName="pass" placeholder="Password">
+            <input [class]="{ 'inputEle':true , 'danger':loginForm.get('pass').invalid&&loginForm.get('pass').touched ,
+        'success':loginForm.get('pass').valid&&loginForm.get('pass').touched}" type="password" formControlName="pass" placeholder="Password">
         </div>
         <div>
             <button class="btnSbmt" type="submit" [disabled]="!loginForm.valid">Login</button>

@@ -17,8 +17,8 @@ import { LoginService } from '../login.service';
 export class LoginComponent implements OnInit {
 
   loginForm = new FormGroup({
-    name: new FormControl('', Validators.required),
-    pass: new FormControl('', Validators.required),
+    name: new FormControl('',[ Validators.required,Validators.minLength(5) ]),
+    pass: new FormControl('',[ Validators.required,Validators.minLength(5)]),
   });
 
   private routerUrl:string;

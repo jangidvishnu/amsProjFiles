@@ -8,6 +8,6 @@
     <ul class="navbar-nav">
     </ul>
   </div>
-  <button *ngIf="loggedIn" class="btn btn-outline-success my-2 my-sm-0" >Logout</button>
+  <button  class="btn btn-outline-success my-2 my-sm-0" (click)="logout()" >Logout</button>
 </nav>
 <router-outlet></router-outlet>
