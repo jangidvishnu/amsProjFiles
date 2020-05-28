@@ -10,7 +10,7 @@ const adminRoutes: Routes = [
   children :[
       { path: '', component: AdminComponent},
       { path: 'assets', component: AssetsComponent ,outlet:'adminR' },
-      { path: 'employees', component:EmployeesDetailComponent , outlet:'adminR' },
+      { path: 'employees-detail', component:EmployeesDetailComponent , outlet:'adminR' },
   ]
 },
 ];
