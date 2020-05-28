@@ -29,7 +29,8 @@ import { AdminRoutingModule } from './admin/admin-routing.module';
       InMemoryDataService, { dataEncapsulation: false }
     ),
     AdminModule,
-    AppRoutingModule,
+    AdminRoutingModule,
+    AppRoutingModule
     
   ],
   providers: [],
