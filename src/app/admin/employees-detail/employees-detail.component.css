@@ -10,3 +10,96 @@
     left: 0px;
     top: 0px;
 }
+
+.button-grp {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 0px 40px;
+}
+
+.noOfAssetsBadge {
+    text-align: start;
+    position: absolute;
+    left: 48%;
+}
+
+.remove-badge {
+    margin-right: 5px;
+    background-color: red;
+}
+
+.remove-badge:focus {
+    outline: none;
+}
+
+.search-result {
+    overflow-y: auto;
+    max-height: 10vh;
+}
+
+.form-control {
+    padding-right: 2px;
+    padding-left: 8px;
+}
+
+.search-result li {
+    border-bottom: 1px solid gray;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    padding-left: 2px;
+    background-color: white;
+    cursor: pointer;
+    list-style-type: none;
+}
+
+.search-result li:hover {
+    background-color: #607D8B;
+}
+
+.search-result li a {
+    color: #888;
+    display: block;
+    text-decoration: none;
+}
+
+.search-result li a:hover {
+    color: white;
+}
+
+.search-result li a:active {
+    color: white;
+}
+
+#search-box {
+    width: auto;
+}
+
+ul.search-result {
+    margin-top: 0;
+    padding-left: 0;
+}
+
+#search-component {
+    margin-right: 5px;
+}
+
+@media (max-width:312px) {
+    .list-group {
+        margin: 20px 10px;
+        height: 60vh;
+        overflow-y: auto;
+        border: 1px solid rgb(211, 202, 202);
+    }
+    .button-grp {
+        margin: 10px 10px;
+    }
+    .form-control {
+        max-width: 120px;
+    }
+}
+
+@media (min-width:400px) {
+    .add-emp-btn {
+        max-height: 40px;
+    }
+}

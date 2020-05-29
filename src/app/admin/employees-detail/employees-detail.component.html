@@ -1,12 +1,32 @@
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployeeModal">Add Employee</button>
+<div class="button-grp">
+    <button type="button" class="btn btn-primary add-emp-btn" data-toggle="modal" data-target="#addEmployeeModal">Add
+        Employee</button>
+    <div id="search-component">
+        <div class="input-group input-group-sm ">
+            <input type="text" #searchBox id="search-box" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" class="form-control" placeholder="Search Employee" (input)="search(searchBox.value)" />
+        </div>
+
+
+        <ul class="search-result">
+            <li *ngFor="let employee of searchedEmployees$ | async">
+                <a routerLink="/detail/{{employee.id}}">
+                    {{employee.name}}
+                </a>
+            </li>
+            <li *ngIf="searchedEmployees$[0]">
+                No More Results!
+            </li>
+        </ul>
+    </div>
+</div>
 <div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">New Employee</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <form [formGroup]="addEmployeeForm" (ngSubmit)="addEmployee()">
@@ -16,7 +36,7 @@
                     </div>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Password:</label>
-                        <input type="password" class="form-control" formControlName="pass">
+                        <input type="text" class="form-control" formControlName="pass">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -29,22 +49,43 @@
     </div>
 </div>
 
+<!-- Remove Employee Backdrop -->
+
+<div class="modal fade" id="removeEmpBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Remove Employee</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure ! You want to remove this employee ???
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="resetRemoveEmployeeId()" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" (click)="deleteEmployee()" class="btn btn-primary" data-dismiss="modal">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <ul class="list-group">
     <li class="list-group-item d-flex justify-content-between align-items-center active">
         Employee Name
-        <span>Number of Assets</span>
+        <span style="margin-left: 3px;">Number of Assets</span>
+        <span style="margin-left: 3px;">Remove Employee</span>
     </li>
     <li *ngFor="let employee of employees" class="list-group-item d-flex justify-content-between align-items-center">
         {{employee.name}}
-        <span class="badge badge-primary badge-pill">{{employee.assignedAssets.length}}</span>
+        <span class="badge badge-primary badge-pill noOfAssetsBadge">{{employee.assignedAssets.length}}</span>
+        <button type="button" (click)="setRemoveEmployeeId(employee.id)" class="remove-badge badge badge-primary badge-pill" data-toggle="modal" data-target="#removeEmpBackdrop">X
+        </button>
     </li>
 </ul>
+
+
 <div *ngIf="errorMsg">
     Error Occured: {{errorMsg}}
 </div>
-<script>
-    $(".modal-footer").on('click', '#sbmtBtn', function() {
-        console.log('Add employee clicked');
-        $('#addEmployeeModal').modal('hide');
-    });
-</script>

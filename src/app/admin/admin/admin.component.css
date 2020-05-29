@@ -6,8 +6,16 @@
 .router-link {
     margin: 0px 7px;
     border-radius: 4px;
-    padding: 4px 4px;
+    padding: .375rem .75rem;
     background-color: #cfd3d5;
     text-decoration: none;
     color: black;
+}
+
+.router-link:hover {
+    color: blue;
+}
+
+.separator-line {
+    margin: 10px 0px;
 }
