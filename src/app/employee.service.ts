@@ -52,7 +52,7 @@ export class EmployeeService {
       params: new HttpParams({ fromString: `name=${name}&pass=${pass}` })
     })
       .pipe(
-        filter(resultEmp => (resultEmp[0].name == name) && (resultEmp[0].pass == pass)),
+        filter(resultEmp => (resultEmp[0]?.name == name) && (resultEmp[0]?.pass == pass)),
         catchError(this.errorHandler)
       );
   }
@@ -67,4 +67,10 @@ export class EmployeeService {
     );
   }
 
+  assignAsset(employee:Employee):Observable<Employee>{
+    return this.http.put<Employee>(this.employeesUrl,employee).
+    pipe(
+      catchError(this.errorHandler)
+    );
+  }
 }

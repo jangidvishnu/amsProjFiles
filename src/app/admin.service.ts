@@ -25,7 +25,7 @@ export class AdminService {
       params: new HttpParams({fromString:`name=${name}&pass=${pass}`})
     })
       .pipe(
-        filter( resultAdmin => (resultAdmin[0].name==name)&&(resultAdmin[0].pass==pass)  ),
+        filter( resultAdmin => (resultAdmin[0]?.name==name)&&(resultAdmin[0]?.pass==pass)  ),
         catchError(this.errorHandler)
       );
   }

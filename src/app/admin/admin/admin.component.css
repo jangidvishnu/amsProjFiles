@@ -1,7 +1,12 @@
+/*----------- Admin Title------------- */
+
 #adminTitle {
     text-align: center;
     color: rgb(9, 90, 90);
 }
+
+
+/*----------- Roting Navigation ------------- */
 
 .router-link {
     margin: 0px 7px;
@@ -15,6 +20,13 @@
 .router-link:hover {
     color: blue;
 }
+
+.active {
+    color: blue;
+}
+
+
+/*----------- hr line ------------- */
 
 .separator-line {
     margin: 10px 0px;

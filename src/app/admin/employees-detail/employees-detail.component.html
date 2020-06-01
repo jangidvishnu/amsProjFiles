@@ -1,3 +1,5 @@
+<!--  ---------- Add Employee Button and  Search Bar   ------------   -->
+
 <div class="button-grp">
     <button type="button" class="btn btn-primary add-emp-btn" data-toggle="modal" data-target="#addEmployeeModal">Add
         Employee</button>
@@ -6,19 +8,20 @@
             <input type="text" #searchBox id="search-box" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" class="form-control" placeholder="Search Employee" (input)="search(searchBox.value)" />
         </div>
 
+        <!--   ------------ Search Result List -----------   -->
 
         <ul class="search-result">
             <li *ngFor="let employee of searchedEmployees$ | async">
-                <a routerLink="/detail/{{employee.id}}">
+                <a routerLink="/admin-emp/detail/{{employee.id}}">
                     {{employee.name}}
                 </a>
-            </li>
-            <li *ngIf="searchedEmployees$[0]">
-                No More Results!
             </li>
         </ul>
     </div>
 </div>
+
+<!--   -------------   add Employee Modal    -------------  -->
+
 <div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -31,12 +34,12 @@
             <div class="modal-body">
                 <form [formGroup]="addEmployeeForm" (ngSubmit)="addEmployee()">
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Employee Name:</label>
-                        <input type="text" class="form-control" formControlName="name">
+                        <label for="employee-name" class="col-form-label">Employee Name:</label>
+                        <input type="text" id="employee-name" class="form-control" formControlName="name">
                     </div>
                     <div class="form-group">
-                        <label for="message-text" class="col-form-label">Password:</label>
-                        <input type="text" class="form-control" formControlName="pass">
+                        <label for="emp-pass" class="col-form-label">Password:</label>
+                        <input type="text" id="emp-pass" class="form-control" formControlName="pass">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -44,12 +47,11 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
 
-<!-- Remove Employee Backdrop -->
+<!--------------------------- Remove Employee Backdrop ---------------->
 
 <div class="modal fade" id="removeEmpBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -71,21 +73,26 @@
     </div>
 </div>
 
+<!----------------------- Employees List -------------------->
+
 <ul class="list-group">
     <li class="list-group-item d-flex justify-content-between align-items-center active">
-        Employee Name
-        <span style="margin-left: 3px;">Number of Assets</span>
-        <span style="margin-left: 3px;">Remove Employee</span>
+        <span style="padding-right: 5px;">Employee Name</span>
+        <span class="list-title">Number of Assets</span>
+        <span class="list-title">Remove Employee</span>
     </li>
     <li *ngFor="let employee of employees" class="list-group-item d-flex justify-content-between align-items-center">
-        {{employee.name}}
-        <span class="badge badge-primary badge-pill noOfAssetsBadge">{{employee.assignedAssets.length}}</span>
-        <button type="button" (click)="setRemoveEmployeeId(employee.id)" class="remove-badge badge badge-primary badge-pill" data-toggle="modal" data-target="#removeEmpBackdrop">X
+        <a routerLink="/admin-emp/detail/{{employee.id}}" class="employee-link">
+           {{employee.id}} {{employee.name}}
+        </a>
+        <span class=" badge badge-primary badge-pill noOfAssetsBadge ">{{employee.assignedAssets.length}}</span>
+        <button type="button " (click)="setRemoveEmployeeId(employee.id)" class="remove-badge badge badge-primary badge-pill " data-toggle="modal" data-target="#removeEmpBackdrop">X
         </button>
     </li>
 </ul>
 
+<!--  ------------  Error Messages --------------->
 
-<div *ngIf="errorMsg">
+<div *ngIf="errorMsg ">
     Error Occured: {{errorMsg}}
 </div>

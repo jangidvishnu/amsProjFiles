@@ -1,0 +1,94 @@
+<!--------------- Employee Info------------------ -->
+<div class="info-div">
+    <h1 class="info-line"><span class="name-label">Employee Id : </span><span
+            class="label-value">{{employee?.id}}</span></h1>
+    <h1 class="info-line float-right"><span class="name-label">Employee Name : </span><span
+            class="label-value">{{employee?.name}}</span></h1>
+</div>
+
+<hr class="separator-line">
+
+<!--   -------------   assign Asset Modal    -------------  -->
+
+<div class="modal fade" id="assignAssetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Assign Asset</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div id="search-component">
+                    <div class="ass-selection">
+                        <div class="input-group input-group-sm ">
+                            <input type="text" #searchBox id="search-box" aria-label="Sizing example input"
+                                aria-describedby="inputGroup-sizing-sm" class="form-control"
+                                placeholder="Search by Name/Category" (input)="search(searchBox.value)" />
+                        </div>
+
+                        <!--   ------------ Search Result List -----------   -->
+                        <ul class="search-result">
+                            <li *ngFor="let asset of searchedAssets$ | async">
+                                <a routerLink="/admin-asset/detail/{{asset.id}}">
+                                    {{asset.assetName}}
+                                </a>
+                                <button (click)="addSelectedAssets(asset)">+</button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <span style="margin:auto">&#8594;</span>
+                    <div class="selected-assets">
+                        <ul class="search-result">
+                            <li *ngFor="let asset of selectedAssets">
+                                {{asset.assetName}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <form (ngSubmit)="assignAsset()" [formGroup]="assignAssetForm">
+                    <div class="form-group">
+                        <label for="sub-date" class="col-form-label">Submission Date:</label>
+                        <input type="date" formControlName="submissionDateInput" id="sub-date" class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" (click)="clearAsset()" >Clear Asset</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="!assignAssetForm.valid || !selectedAssets">Assign</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ------------------Button--------- -->
+
+<div class="button-grp">
+    <button type="button" class="btn btn-primary assign-asset-btn" data-toggle="modal"
+        data-target="#assignAssetModal">Assign
+        Asset</button>
+</div>
+
+<!--------------------- Asset List ---------------------->
+
+<div class="list-info-div">
+    <h1 class="list-info-line">Assigned Assets</h1>
+</div>
+<ul class="list-group">
+    <li class="list-group-item d-flex justify-content-between align-items-center active">
+        Assets Name
+        <span style="margin-left: 3px;">Remove Asset</span>
+    </li>
+    <li *ngFor="let asset of assetList" class="list-group-item d-flex justify-content-between align-items-center">
+        <a routerLink="/admin-emp/detail/" class="asset-link">
+            {{asset.assetName}}
+        </a>
+        <button type="button" class="remove-badge badge badge-primary badge-pill" data-toggle="modal" data-target="">X
+        </button>
+    </li>
+</ul>

@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Employee } from './employee'
+import { Mobile } from './assetClasses/mobile';
+import { Laptop } from './assetClasses/laptop';
+import { Books } from './assetClasses/books';
+import { DesktopPC } from './assetClasses/desktop-pc';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +27,13 @@ export class InMemoryDataService implements InMemoryDbService {
     ];
     const admin = [
       { name: "admin", pass: "adminPass" }
+    ];
+    const assets = [
     ]
-    return { employees, admin };
+    return { employees, admin, assets };
   }
 
-  genId(employee: Employee[]): number {
-    return employee.length > 0 ? Math.max(...employee.map(employee => employee.id)) + 1 : 1;
+  genId<T extends Employee | Mobile | DesktopPC | Books | Laptop>(myTable: T[]): number {
+    return myTable.length > 0 ? Math.max(...myTable.map(t => t.id)) + 1 : 1;
   }
 }

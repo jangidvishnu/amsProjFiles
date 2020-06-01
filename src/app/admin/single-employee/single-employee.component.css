@@ -1,0 +1,208 @@
+/* -------------- assign Asset Modal----------------- */
+
+.selected-assets {
+    width: 45%;
+    margin-left: auto;
+}
+
+.ass-selection {
+    width: 45%;
+}
+
+/* ---------serached Asset List---------- */
+
+.search-result {
+    overflow-y: auto;
+    max-height: 20vh;
+    border: 1px solid gray;
+}
+
+.search-result li {
+    border-bottom: 1px solid gray;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    padding-left: 2px;
+    background-color: white;
+    cursor: pointer;
+    list-style-type: none;
+}
+
+.search-result li:hover {
+    background-color: #607D8B;
+}
+
+.search-result li a {
+    display: inline-block;
+    width: 80%;
+    color: #888;
+    text-decoration: none;
+}
+
+.search-result li button {
+    display: inline-block;
+    width: 18%;
+    text-decoration: none;
+}
+
+.search-result li a:hover {
+    color: white;
+}
+
+.search-result li a:active {
+    color: white;
+}
+
+#search-box {
+    width: auto;
+}
+
+ul.search-result {
+    margin-top: 0;
+    padding-left: 0;
+}
+
+#search-component {
+    display: flex;
+    flex-direction: row;
+    margin-top: 5vh;
+    flex-wrap: wrap;
+}
+
+.selected-assets .search-result{
+    min-height: 5vh;
+}
+/* -----------Employee Info------------- */
+
+.info-div {
+    margin: 30px 35px;
+}
+
+.info-line {
+    margin-bottom: 5px;
+    font-size: 1.5rem;
+    background-color: #f6f6f6;
+    display: inline-block;
+    border-radius: 2px;
+}
+
+.name-label {
+    font-size: 1.5rem;
+    background-color: transparent;
+}
+
+.label-value {
+    padding-right: 2px;
+    padding-left: 2px;
+}
+
+.list-info-div {
+    margin: 0px 35px;
+}
+
+.list-info-line {
+    color: white;
+    border: 1px solid rgb(211, 202, 202);
+    font-size: 1.5rem;
+    display: inline-block;
+    background-color: #007bff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 4px 4px;
+    margin-bottom: 0px;
+}
+
+/* Assign Asset Button */
+
+.button-grp {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 0px 40px;
+}
+
+/* -------------Assets List -----------------------*/
+
+.list-group {
+    margin: 0px 35px;
+    max-height: 60vh;
+    overflow-y: auto;
+    border: 1px solid rgb(211, 202, 202);
+    border-top-left-radius: 0px;
+}
+
+.list-group .active {
+    position: sticky;
+    left: 0px;
+    top: 0px;
+}
+
+.remove-badge {
+    margin-right: 5px;
+    background-color: red;
+}
+
+.remove-badge:focus {
+    outline: none;
+}
+
+.asset-link {
+    text-decoration-line: none;
+}
+
+/*------------------ Utilities-------------------- */
+
+.separator-line {
+    margin: 10px 0px;
+}
+
+/* ---------------- Media Queries ----------- */
+
+@media (max-width:500px) {
+    #search-component {
+        flex-direction: column;
+    }
+    .selected-assets {
+        width: 90%;
+        margin-left: auto;
+    }
+    
+    .ass-selection {
+        width: 90%;
+    }
+    
+}
+
+@media (max-width:390px) {
+    .info-line {
+        font-size: 1rem;
+    }
+    .name-label {
+        font-size: 1rem;
+    }
+    .list-info-line {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width:312px) {
+    .list-group {
+        margin: 0px 10px;
+        height: 60vh;
+        overflow-y: auto;
+        border: 1px solid rgb(211, 202, 202);
+    }
+    .info-div {
+        margin: 20px 10px;
+    }
+    .list-info-div {
+        margin-left: 10px;
+    }
+    .button-grp {
+        margin: 10px 10px;
+    }
+}
+
+@media (min-width:400px) {
+    .assign-asset-btn {
+        max-height: 40px;
+    }
+}

@@ -7,13 +7,21 @@ export class LoginService {
 
   constructor() { }
   private loggedIn: string[] = [];
+  private loggedInRoute:string;
 
   login(user: string) {
     this.loggedIn.push(user);
+    if(user=='admin'){
+      this.loggedInRoute=user;
+    }
+    else{
+      this.loggedInRoute=user.slice(0,8)+'/'+user.slice(10);
+    }
   }
 
   logout() {
     this.loggedIn = [];
+    this.loggedInRoute="";
   }
 
   ifLoggedIn(user: string) {
@@ -26,5 +34,9 @@ export class LoginService {
     else{
       return false;
     }
+  }
+  getLoggedInRoute():string
+  {
+    return this.loggedInRoute;
   }
 }

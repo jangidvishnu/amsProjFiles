@@ -1,1 +1,111 @@
-<p>assets works!</p>
+<!--  ---------- Add Asset Button and  Search Bar   ------------   -->
+
+<div class="button-grp">
+    <button type="button" class="btn btn-primary add-asset-btn" data-toggle="modal" data-target="#addAssetModal">Add
+        Asset</button>
+    <div id="search-component">
+        <div class="input-group input-group-sm ">
+            <input type="text" #searchBox id="search-box" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-sm" class="form-control" placeholder="Search Asset"
+                (input)="search(searchBox.value)" />
+        </div>
+
+        <!--   ------------ Search Result List -----------   -->
+
+        <ul class="search-result ">
+            <li *ngFor="let asset of searchedAssets$ | async ">
+                <a routerLink="/admin-asset/detail/{{asset.id}} ">
+                    {{asset.assetName}}
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!--   -------------   add Asset Modal    -------------  -->
+
+<div class="modal fade " id="addAssetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New Asset</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addAssetForm" (ngSubmit)="addAsset()">
+                    <div class="form-group">
+                        <label for="assetName" class="col-form-label">Asset Name:</label>
+                        <input type="text" id="assetName" class="form-control" formControlName="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="assetUnId" class="col-form-label">Asset Unique Id:</label>
+                        <input type="text" id="assetUnId" class="form-control" formControlName="unid">
+                    </div>
+                    <div class="form-group">
+                        <label for="assetCategory" class="col-form-label">Asset Category:</label>
+                        <select name="assetCategory" id="assetCategory"  formControlName="category">
+                            <option value="mobile">Mobile</option>
+                            <option value="laptop">Laptop</option>
+                            <option value="desktoppc">Desktop PC</option>
+                            <option value="book">Book</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" id="sbmtBtn" class="btn btn-primary"
+                            [disabled]="!addAssetForm.valid">Add Asset</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--------------------------- Remove Asset Backdrop ---------------->
+
+<div class="modal fade" id="removeAssetBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Remove Asset</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure ! You want to remove this Asset ???
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="resetRemoveAssetId()" class="btn btn-secondary"
+                    data-dismiss="modal">No</button>
+                <button type="button" (click)="deleteAsset()" class="btn btn-primary"
+                    data-dismiss="modal">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!----------------------- Assets List -------------------->
+
+<ul class="list-group ">
+    <li class="list-group-item d-flex justify-content-between align-items-center active ">
+        <span style="padding-right: 5px; ">Asset Name</span>
+        <span class="list-title ">Assigned Employee</span>
+        <span class="list-title ">Remove Asset</span>
+    </li>
+    <li *ngFor="let asset of assets" class="list-group-item d-flex justify-content-between align-items-center ">
+        <a routerLink="/admin-asset/detail/{{asset?.id}} " class="employee-link ">
+            {{asset?.id}} {{asset?.assetName}}
+        </a>
+        <span *ngIf="asset?.issuedEmployeeName" class="badge badge-primary badge-pill assignedEmployeeBadge ">{{asset?.issuedEmployeeName}}</span>
+        <span *ngIf="!asset?.issuedEmployeeName" class="badge badge-primary badge-pill assignedEmployeeBadge ">Not assigned</span>
+        <button type="button" (click)="setRemoveAssetId(asset?.id)" class="remove-badge badge badge-primary badge-pill"
+            data-toggle="modal" data-target="#removeAssetBackdrop">X
+        </button>
+    </li>
+</ul>

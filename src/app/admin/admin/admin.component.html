@@ -1,7 +1,7 @@
 <h1 id="adminTitle">Admin Panel</h1>
 
 
-<a [routerLink]="[{outlets: {adminR: 'assets'}}]" class="router-link" style="margin-left:20px">Assets</a>
-<a [routerLink]="[ {outlets: {adminR: 'employees-detail'}}]" class="router-link">Employees</a>
+<a [routerLink]="[{outlets: {adminR: 'assets'}}]" class="router-link" style="margin-left:20px" routerLinkActive="active">Assets</a>
+<a [routerLink]="[ {outlets: {adminR: 'employees-detail'}}]" class="router-link" routerLinkActive="active">Employees</a>
 <hr class="separator-line">
 <router-outlet name="adminR"></router-outlet>

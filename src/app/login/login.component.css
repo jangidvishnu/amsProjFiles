@@ -1,3 +1,5 @@
+/*------------------ Form Box --------------*/
+
 .formDiv {
     display: flex;
     align-items: center;
@@ -10,6 +12,9 @@
     min-height: 50vh;
     border-radius: 10px;
 }
+
+
+/* -------------Input Tags ------------------- */
 
 .formElement {
     display: block;
@@ -26,6 +31,9 @@
     outline: none;
 }
 
+
+/* -----------------Submit Button------------------ */
+
 .btnSbmt {
     display: block;
     width: 100%;
@@ -40,6 +48,9 @@
 .btnSbmt:focus {
     outline: none;
 }
+
+
+/* -------------  alert  ------------------- */
 
 .danger {
     border: 2px solid red;
@@ -57,9 +68,12 @@
     border: 3px solid red;
 }
 
-@media (max-width:400px) {
+
+/* ------------------Media Queries------------ */
+
+@media (max-width:284px) {
     .formDiv {
-        margin: 15vh auto;
+        margin: 15vh 10px;
         margin-bottom: 0px;
     }
     .formElement {

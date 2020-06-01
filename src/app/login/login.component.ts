@@ -17,17 +17,16 @@ import { LoginService } from '../login.service';
 export class LoginComponent implements OnInit {
 
   loginForm = new FormGroup({
-    name: new FormControl('',[ Validators.required,Validators.minLength(5) ]),
-    pass: new FormControl('',[ Validators.required,Validators.minLength(5)]),
+    name: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    pass: new FormControl('', [Validators.required, Validators.minLength(5)]),
   });
 
-  private routerUrl:string;
   constructor(private employeeService: EmployeeService, private adminService: AdminService,
     private router: Router, private loginService: LoginService) {
-      if (this.loginService.ifSomebodyLoggedIn()) {
-        this.router.navigate([this.routerUrl]);
-      }
-     }
+    if (this.loginService.ifSomebodyLoggedIn()) {
+      this.router.navigate([this.loginService.getLoggedInRoute()]);
+    }
+  }
 
   ngOnInit(): void {
   }
@@ -38,19 +37,13 @@ export class LoginComponent implements OnInit {
     pass = pass.trim();
     this.loginForm.setValue({ 'name': "", 'pass': "" });
     this.isAdmin(name, pass);
-    if (this.loginService.ifSomebodyLoggedIn()) {
-      alert("You are already logged in");
-    }
-    else {
-      this.isEmployee(name, pass);
-    }
+    this.isEmployee(name, pass);
   }
   private isAdmin(name: string, pass: string) {
     this.adminService.getAdmin(name, pass)
       .subscribe(adm => {
         if (adm[0] != undefined) {
           this.loginService.login('admin');
-          this.routerUrl="admin";
           this.router.navigate(['admin']);
         }
 
@@ -63,7 +56,6 @@ export class LoginComponent implements OnInit {
       .subscribe(emp => {
         if (emp[0] != undefined) {
           this.loginService.login('employeeid' + emp[0].id);
-          this.routerUrl="employee/"+emp[0].id;
           this.router.navigate(['employee/' + emp[0].id]);
 
         }

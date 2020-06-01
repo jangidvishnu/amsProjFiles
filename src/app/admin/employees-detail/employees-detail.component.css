@@ -1,15 +1,4 @@
-.list-group {
-    margin: 20px 35px;
-    height: 60vh;
-    overflow-y: auto;
-    border: 1px solid rgb(211, 202, 202);
-}
-
-.list-group .active {
-    position: sticky;
-    left: 0px;
-    top: 0px;
-}
+/*----------- Add Employee Button and Search Bar ------------- */
 
 .button-grp {
     display: flex;
@@ -17,29 +6,10 @@
     margin: 0px 40px;
 }
 
-.noOfAssetsBadge {
-    text-align: start;
-    position: absolute;
-    left: 48%;
-}
-
-.remove-badge {
-    margin-right: 5px;
-    background-color: red;
-}
-
-.remove-badge:focus {
-    outline: none;
-}
-
 .search-result {
     overflow-y: auto;
     max-height: 10vh;
-}
-
-.form-control {
-    padding-right: 2px;
-    padding-left: 8px;
+    border: 1px solid gray;
 }
 
 .search-result li {
@@ -83,6 +53,57 @@ ul.search-result {
     margin-right: 5px;
 }
 
+
+/* ----------- Employees List----------- */
+
+.list-group {
+    margin: 20px 35px;
+    height: 60vh;
+    overflow-y: auto;
+    border: 1px solid rgb(211, 202, 202);
+}
+
+.list-group .active {
+    position: sticky;
+    left: 0px;
+    top: 0px;
+}
+
+.noOfAssetsBadge {
+    text-align: start;
+    position: absolute;
+    left: 48%;
+}
+
+.remove-badge {
+    margin-right: 5px;
+    background-color: red;
+}
+
+.remove-badge:focus {
+    outline: none;
+}
+
+.employee-link {
+    text-decoration-line: none;
+}
+
+.list-title {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+
+/* ----------Add Employee Modal ------------ */
+
+.form-control {
+    padding-right: 2px;
+    padding-left: 8px;
+}
+
+
+/* -------Media Queries------------------ */
+
 @media (max-width:312px) {
     .list-group {
         margin: 20px 10px;
@@ -95,6 +116,12 @@ ul.search-result {
     }
     .form-control {
         max-width: 120px;
+    }
+}
+
+@media (max-width:540px) {
+    .list-title {
+        border-left: 1px solid black;
     }
 }
 

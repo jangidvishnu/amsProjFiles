@@ -5,11 +5,11 @@
         </div>
         <div class="formElement">
             <input [class]="{'inputEle':true , 'danger':loginForm.get('name').invalid&&loginForm.get('name').touched ,
-        'success':loginForm.get('name').valid&&loginForm.get('name').touched}" type="text" formControlName="name" placeholder="Name" name="nameInput">
+        'success':loginForm.get('name').valid&&loginForm.get('name').touched}" type="text" formControlName="name" placeholder="Name" name="nameInput" autocomplete="name">
         </div>
         <div class="formElement">
             <input [class]="{ 'inputEle':true , 'danger':loginForm.get('pass').invalid&&loginForm.get('pass').touched ,
-        'success':loginForm.get('pass').valid&&loginForm.get('pass').touched}" type="password" formControlName="pass" placeholder="Password">
+        'success':loginForm.get('pass').valid&&loginForm.get('pass').touched}" type="password" formControlName="pass" placeholder="Password" autocomplete="current-password">
         </div>
         <div class="formElement">
             <button class="btnSbmt" type="submit" [disabled]="!loginForm.valid">Login</button>
