@@ -7,6 +7,10 @@ import { Subject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { AssetService } from 'src/app/asset.service';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { Mobile } from 'src/app/assetClasses/mobile';
+import { Books } from 'src/app/assetClasses/books';
+import { Laptop } from 'src/app/assetClasses/laptop';
+import { DesktopPC } from 'src/app/assetClasses/desktop-pc';
 
 @Component({
   selector: 'app-single-employee',
@@ -15,6 +19,7 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 })
 export class SingleEmployeeComponent implements OnInit {
 
+  private unassignAssetId: number;
   selectedAssets: any;
   searchedAssets$: Observable<any>;
   private searchTerms = new Subject<string>();
@@ -59,7 +64,7 @@ export class SingleEmployeeComponent implements OnInit {
     this.searchTerms.next(term);
   }
 
-  addSelectedAssets(asset: any) {
+  addSelectedAssets(asset: Mobile | Books | Laptop | DesktopPC) {
 
     if (this.selectedAssets == undefined) {
       this.selectedAssets = [asset];
@@ -68,25 +73,83 @@ export class SingleEmployeeComponent implements OnInit {
       alert('already added');
     }
     else {
-      console.log(this.selectedAssets);
       this.selectedAssets.push(asset);
     }
   }
 
   assignAsset() {
     let subdate = this.assignAssetForm.get('submissionDateInput').value;
-    for (let asset of this.selectedAssets){
-      // console.log(this.selectedAssets);
-      // console.log(asset);
+    let issdate = new Date();
+    for (let asset of this.selectedAssets) {
+      asset.issueDate = issdate;
+      asset.submissionDate = new Date(subdate);
+      asset.issuedEmployeeName = this.employee.name;
+      asset.issuedEmployeeId = this.employee.id;
+      asset.status = "Assigned";
+      this.assetService.updateAsset(asset).subscribe();
       this.employee.assignedAssets.push(asset);
     }
-    this.assetList=this.employee.assignedAssets;
-    // console.log(this.employee);
-    this.employeeService.assignAsset(this.employee).
-    subscribe();
+    this.assetList = this.employee.assignedAssets;
+    this.employeeService.updateEmployee(this.employee).subscribe();
+    this.assignAssetForm.setValue({ submissionDateInput: '' });
+    this.selectedAssets = [];
+    this.search("");
   }
 
   clearAsset() {
     this.selectedAssets = undefined;
+  }
+
+  setUnassignAssetId(id: number) {
+    this.unassignAssetId = id;
+  }
+
+  resetUnassignAssetId() {
+    this.unassignAssetId = undefined;
+  }
+
+  unassignAsset() {
+    if (this.unassignAssetId != undefined) {
+      let updatedAssignedAssets=[];
+      let assets: any = this.employee.assignedAssets
+      for (let asset of assets) {
+        if (asset.id == this.unassignAssetId) {
+          asset.status = "Available";
+          delete asset.issuedEmployeeName;
+          delete asset.submissionDate;
+          delete asset.issueDate;
+          delete asset.issuedEmployeeId;
+          this.assetService.updateAsset(asset).subscribe();
+        }
+        else{
+          updatedAssignedAssets.push(asset);
+        }
+      }
+      this.employee.assignedAssets=updatedAssignedAssets;
+      this.assetList=updatedAssignedAssets;
+      this.employeeService.updateEmployee(this.employee).subscribe();
+      
+    }
+  }
+  
+  deleteEmployee() {
+      this.employeeService.getEmployeeById(this.employee.id).
+      subscribe(
+        (emp) =>
+        {
+         let assets:any=emp.assignedAssets;
+         for (let asset of assets){
+           asset.status="Available";
+           delete asset.issuedEmployeeName;
+           delete asset.submissionDate;
+           delete asset.issueDate;
+           delete asset.issuedEmployeeId;
+           this.assetService.updateAsset(asset).subscribe();
+         }
+        }
+      );
+      this.employeeService.deleteEmployee(this.employee.id)
+        .subscribe();
+      this.router.navigateByUrl('/admin/(adminR:employees-detail)');
   }
 }

@@ -8,6 +8,52 @@
 
 <hr class="separator-line">
 
+<!--------------------------- Unassign Asset Backdrop ---------------->
+
+<div class="modal fade" id="unassignAssetBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Remove Asset</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure ! You want to Un-assign this Asset from Employee ???
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="resetUnassignAssetId()" class="btn btn-secondary"
+                    data-dismiss="modal">No</button>
+                <button type="button" (click)="unassignAsset()" class="btn btn-primary"
+                    data-dismiss="modal">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------------------------- Remove Employee Backdrop ---------------->
+
+<div class="modal fade" id="removeEmpBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Remove Employee</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure ! You want to remove this employee ???
+            </div>
+            <div class="modal-footer">
+                <button type="button"  class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" (click)="deleteEmployee()" class="btn btn-primary" data-dismiss="modal">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!--   -------------   assign Asset Modal    -------------  -->
 
 <div class="modal fade" id="assignAssetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -21,6 +67,7 @@
                 </button>
             </div>
             <div class="modal-body">
+                <!----------------------------- Search--------------------- -->
 
                 <div id="search-component">
                     <div class="ass-selection">
@@ -57,8 +104,9 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger" (click)="clearAsset()" >Clear Asset</button>
-                        <button type="submit" class="btn btn-primary" [disabled]="!assignAssetForm.valid || !selectedAssets">Assign</button>
+                        <button type="button" class="btn btn-danger" (click)="clearAsset()">Clear Asset</button>
+                        <button type="submit" class="btn btn-primary" (click)="searchBox.value=''"
+                            [disabled]="!assignAssetForm.valid || !selectedAssets">Assign</button>
                     </div>
                 </form>
             </div>
@@ -66,12 +114,16 @@
     </div>
 </div>
 
-<!-- ------------------Button--------- -->
+<!-- ------------------Assign Asset Button--------- -->
 
 <div class="button-grp">
     <button type="button" class="btn btn-primary assign-asset-btn" data-toggle="modal"
         data-target="#assignAssetModal">Assign
         Asset</button>
+    <button type="button" class="btn btn-danger assign-asset-btn" data-toggle="modal"
+        data-target="#removeEmpBackdrop" >Delete
+        Employee</button>
+
 </div>
 
 <!--------------------- Asset List ---------------------->
@@ -82,13 +134,14 @@
 <ul class="list-group">
     <li class="list-group-item d-flex justify-content-between align-items-center active">
         Assets Name
-        <span style="margin-left: 3px;">Remove Asset</span>
+        <span style="margin-left: 3px;">Un-assign Asset</span>
     </li>
     <li *ngFor="let asset of assetList" class="list-group-item d-flex justify-content-between align-items-center">
-        <a routerLink="/admin-emp/detail/" class="asset-link">
+        <a routerLink="/admin-asset/detail/{{asset.id}}" class="asset-link">
             {{asset.assetName}}
         </a>
-        <button type="button" class="remove-badge badge badge-primary badge-pill" data-toggle="modal" data-target="">X
+        <button type="button" (click)="setUnassignAssetId(asset.id)" class="remove-badge badge badge-primary badge-pill"
+            data-toggle="modal" data-target="#unassignAssetBackdrop">X
         </button>
     </li>
 </ul>

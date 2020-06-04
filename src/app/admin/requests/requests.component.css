@@ -1,0 +1,36 @@
+.table {
+    margin: 0px;
+}
+
+.my-custom-scrollbar {
+    width: 90vw;
+    margin: 3vh auto;
+    position: relative;
+    max-height: 60vh;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+    border: 1px solid #dee2e6;
+}
+
+.heading {
+    background-color: #007bff;
+    position: sticky;
+    top: 0px;
+    text-align: center;
+}
+
+.table td {
+    text-align: center;
+}
+
+.table td a {
+    text-decoration: none;
+}
+
+.table button {
+    padding: .05rem .5rem;
+    margin:2px 5px;
+}

@@ -1,2 +1,98 @@
-<h1 id="employeeTitle">Employee Panel</h1>
-<h2> {{employee?.id}}.{{employee?.name}}</h2>
+<!--------------- Employee Info------------------ -->
+<div class="info-div">
+    <h1 class="info-line"><span class="name-label">Employee Id : </span><span
+            class="label-value">{{employee?.id}}</span></h1>
+    <h1 class="info-line float-right"><span class="name-label">Employee Name : </span><span
+            class="label-value">{{employee?.name}}</span></h1>
+</div>
+
+<hr class="separator-line">
+
+<!-------------------- Request Asset---------------- -->
+<div class="button-grp">
+    <button type="button" class="btn btn-primary add-emp-btn" data-toggle="modal"
+        data-target="#requestAssetModal">Request
+        Asset</button>
+</div>
+<!--------------------- Asset Table ---------------------->
+<div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-bordered table-responsive-sm">
+        <caption>List of assigned assets</caption>
+        <thead class="bg-primary">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Asset Name</th>
+                <th scope="col">Issue Date</th>
+                <th scope="col">Submission Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let asset of assetList; index as ind">
+                <th scope="row">{{ind+1}}</th>
+                <td>{{asset?.assetName}}</td>
+                <td>{{asset?.issueDate | date:'medium'}}</td>
+                <td>{{asset?.submissionDate | date:'medium' }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--   -------------   Request Asset Modal    -------------  -->
+
+<div class="modal fade" id="requestAssetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Request Asset</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!----------------------------- Search--------------------- -->
+
+                <div id="search-component">
+                    <div class="ass-selection">
+                        <div class="input-group input-group-sm ">
+                            <input type="text" #searchBox id="search-box" aria-label="Sizing example input"
+                                aria-describedby="inputGroup-sizing-sm" class="form-control"
+                                placeholder="Search by Name/Category" (input)="search(searchBox.value)" />
+                        </div>
+
+                        <!--   ------------ Search Result List -----------   -->
+                        <ul class="search-result">
+                            <li *ngFor="let asset of searchedAssets$ | async">
+                                <a routerLink="/admin-asset/detail/{{asset.id}}">
+                                    {{asset.assetName}}
+                                </a>
+                                <button (click)="addSelectedAssets(asset)">+</button>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <span style="margin:auto">&#8594;</span>
+                    <div class="selected-assets">
+                        <ul class="search-result">
+                            <li *ngIf="selectedAsset" >
+                                {{selectedAsset.assetName}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <form (ngSubmit)="requestAsset()" [formGroup]="requestAssetForm">
+                    <div class="form-group">
+                        <label for="sub-date" class="col-form-label">Submission Date:</label>
+                        <input type="date" formControlName="submissionDateInput" id="sub-date" class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" (click)="clearAsset()">Clear Asset</button>
+                        <button type="submit" class="btn btn-primary" (click)="searchBox.value=''"
+                            [disabled]="!requestAssetForm.valid || !selectedAsset">Request</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

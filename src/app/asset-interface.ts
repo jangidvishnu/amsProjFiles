@@ -1,10 +1,12 @@
 
 export interface AssetInterface {
-
-    getAssetCategory():string;
-    getAssetName():string;
-    getAssetUniqueId():string;
-    getIssuedDate():Date;
-    getSubmissionDate():Date;
-    getIssuedEmployeeName():string;
+    id:number;
+    status:string;
+    issuedEmployeeId:number;
+    assetCategory :string;
+    assetName: string;
+    assetUniqueId: string;
+    issueDate: Date;
+    submissionDate: Date;
+    issuedEmployeeName: string;
 }

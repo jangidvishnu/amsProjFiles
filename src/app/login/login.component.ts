@@ -57,7 +57,6 @@ export class LoginComponent implements OnInit {
         if (emp[0] != undefined) {
           this.loginService.login('employeeid' + emp[0].id);
           this.router.navigate(['employee/' + emp[0].id]);
-
         }
       }, error => { console.log(error); }
       );

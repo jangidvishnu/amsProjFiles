@@ -1,0 +1,24 @@
+/* -------Button Group--------- */
+.button-grp {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 20px 40px;
+    margin-right: 5vw;
+}
+
+.assign-asset-btn{
+    margin-left: 1vw;
+}
+
+/* ----------Table---------- */
+
+.table{
+    width:70vw;
+    margin: 10vh auto;
+}
+.employee-link {
+    text-decoration-line: none;
+    font-style: italic;
+    font-weight: bold;
+    color: rgb(20, 3, 53);
+}

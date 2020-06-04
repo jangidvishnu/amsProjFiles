@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { Observable, throwError, of, concat } from 'rxjs';
+import { catchError,filter,mergeAll } from 'rxjs/operators';
 import { AssetInterface } from './asset-interface';
 import { Mobile } from './assetClasses/mobile';
 import { DesktopPC } from './assetClasses/desktop-pc';
@@ -68,10 +68,18 @@ export class AssetService {
       // if not search term, return empty hero array.
       return of([]);
     }
-    return this.http.get<any[]>(`${this.assetsUrl}/?assetCategory=${term}`).pipe(
+    return concat(this.http.get<any>(this.assetsUrl, {
+      params: new HttpParams({fromString:`assetCategory=${term}&status=Available`})
+    }),this.http.get<any>(this.assetsUrl, {
+      params: new HttpParams({fromString:`assetName=${term}&status=Available`})
+    })).pipe(
       catchError(this.errorHandler)
     );
   }
 
-
+  updateAsset(asset:Mobile|Books|Laptop|DesktopPC):Observable<any>{
+    return this.http.put<any>(this.assetsUrl,asset).pipe(
+      catchError(this.errorHandler)
+    );
+  }
 }

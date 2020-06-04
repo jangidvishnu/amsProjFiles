@@ -1,6 +1,163 @@
-/* ----------------------Employee title------------------- */
+/* -----------Employee Info --------------------- */
 
-#employeeTitle {
+.info-div {
+    margin: 30px 35px;
+}
+
+.info-line {
+    margin-bottom: 5px;
+    font-size: 1.5rem;
+    background-color: #f6f6f6;
+    display: inline-block;
+    border-radius: 2px;
+}
+
+.name-label {
+    font-size: 1.5rem;
+    background-color: transparent;
+}
+
+.label-value {
+    padding-right: 2px;
+    padding-left: 2px;
+}
+
+/* ---------Request Asset Button------------- */
+
+.button-grp {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 0px 5vw;
+}
+
+/* ----------- Asset Table-----------  */
+
+.table{
+    margin: 0px;
+}
+
+.my-custom-scrollbar {
+    width: 90vw;
+    margin: 3vh auto;
+    position: relative;
+    max-height: 60vh;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+    border: 1px solid #dee2e6;
+}
+
+.heading {
+    background-color: #007bff;
+    position: sticky;
+    top: 0px;
     text-align: center;
-    color: rgb(9, 90, 90);
+}
+
+.table td {
+    text-align: center;
+}
+
+.table td a{
+    text-decoration: none;
+}
+
+/* ----------Requet Asset Modal---------- */
+
+.selected-assets {
+    width: 45%;
+    margin-left: auto;
+}
+
+.ass-selection {
+    width: 45%;
+}
+
+/* ---------serached Asset List---------- */
+
+.search-result {
+    overflow-y: auto;
+    max-height: 20vh;
+    border: 1px solid gray;
+}
+
+.search-result li {
+    border-bottom: 1px solid gray;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    padding-left: 2px;
+    background-color: white;
+    cursor: pointer;
+    list-style-type: none;
+}
+
+.search-result li:hover {
+    background-color: #607D8B;
+}
+
+.search-result li a {
+    display: inline-block;
+    width: 80%;
+    color: #888;
+    text-decoration: none;
+}
+
+.search-result li button {
+    display: inline-block;
+    width: 18%;
+    text-decoration: none;
+}
+
+.search-result li a:hover {
+    color: white;
+}
+
+.search-result li a:active {
+    color: white;
+}
+
+#search-box {
+    width: auto;
+}
+
+ul.search-result {
+    margin-top: 0;
+    padding-left: 0;
+}
+
+#search-component {
+    display: flex;
+    flex-direction: row;
+    margin-top: 5vh;
+    flex-wrap: wrap;
+}
+
+.selected-assets .search-result {
+    min-height: 5vh;
+}
+
+/* ------------------Media Queries----------- */
+
+@media (max-width:390px) {
+    .info-line {
+        font-size: 1rem;
+    }
+    .name-label {
+        font-size: 1rem;
+    }
+    .list-info-line {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width:312px) {
+    .info-div {
+        margin: 20px 10px;
+        overflow: auto;
+    }
+    .list-info-div {
+        margin-left: 10px;
+    }
 }

@@ -6,6 +6,12 @@ import { Observable,of,Subject } from 'rxjs'
 import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
+import { AssetService } from 'src/app/asset.service';
+import { Mobile } from 'src/app/assetClasses/mobile';
+import { Laptop } from 'src/app/assetClasses/laptop';
+import { DesktopPC } from 'src/app/assetClasses/desktop-pc';
+import { Books } from 'src/app/assetClasses/books';
+import { TEMPORARY_NAME } from '@angular/compiler/src/render3/view/util';
 
 
 @Component({
@@ -16,7 +22,6 @@ import {
 export class EmployeesDetailComponent implements OnInit {
 
   searchedEmployees$:Observable<Employee[]>;
-  removeEmployeeId: number;
   employees: Employee[];
   errorMsg: string;
   private searchTerms = new Subject<string>();
@@ -28,7 +33,7 @@ export class EmployeesDetailComponent implements OnInit {
     }
   );
 
-  constructor(private employeeService: EmployeeService) {
+  constructor(private employeeService: EmployeeService,private assetService:AssetService) {
   }
 
   ngOnInit(): void {
@@ -56,23 +61,6 @@ export class EmployeesDetailComponent implements OnInit {
       .subscribe(employeeAdded => this.employees.push(employeeAdded));
     this.addEmployeeForm.setValue({ name: "", pass: "" });
     this.getEmployees();
-  }
-
-  deleteEmployee() {
-    if (this.removeEmployeeId != null) {
-      this.employeeService.deleteEmployee(this.removeEmployeeId)
-        .subscribe();
-      this.getEmployees();
-      this.removeEmployeeId = null;
-    }
-  }
-
-  setRemoveEmployeeId(id: number) {
-    this.removeEmployeeId = id;
-  }
-
-  resetRemoveEmployeeId() {
-    this.removeEmployeeId = null;
   }
 
   search(term: string): void {

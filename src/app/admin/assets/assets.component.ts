@@ -8,6 +8,7 @@ import { Laptop } from 'src/app/assetClasses/laptop';
 import { DesktopPC } from 'src/app/assetClasses/desktop-pc';
 import { Books } from 'src/app/assetClasses/books';
 
+
 @Component({
   selector: 'app-assets',
   templateUrl: './assets.component.html',
@@ -18,19 +19,12 @@ export class AssetsComponent implements OnInit {
   searchedAssets$: Observable<any>;
   removeAssetId: number;
   assets: any[];
-  private mobile: Mobile;
   private searchTerms = new Subject<string>();
 
   constructor(private assetService: AssetService) { }
 
   ngOnInit(): void {
     this.getAssets();
-    this.mobile = new Mobile('samsung', '1sa');
-    this.assetService.addAsset(this.mobile).subscribe(
-      asset => {
-        this.assets.push(asset);
-      }
-    );
     this.searchedAssets$ = this.searchTerms.pipe(
       debounceTime(300),
 
@@ -59,8 +53,6 @@ export class AssetsComponent implements OnInit {
     let name: string = this.addAssetForm.get('name').value;
     let unid: string = this.addAssetForm.get('unid').value;
     let category:string=this.addAssetForm.get('category').value;
-    console.log(name,unid,category);
-
     if (category=='laptop'){
       let laptopObj= new Laptop(name,unid);
       this.assetService.addAsset(laptopObj)

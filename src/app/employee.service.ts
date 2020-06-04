@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Employee } from './employee'
 import { Observable, of, throwError } from 'rxjs'
-import { catchError, map, tap, filter } from 'rxjs/operators';
+import { catchError, map, tap, filter, elementAt } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -47,12 +47,13 @@ export class EmployeeService {
         catchError(this.errorHandler)
       );
   }
-  getEmployee(name: string, pass: string): Observable<Employee> {
-    return this.http.get<Employee>(this.employeesUrl, {
+  getEmployee(name: string, pass: string): Observable<Employee[]> {
+    return this.http.get<Employee[]>(this.employeesUrl, {
       params: new HttpParams({ fromString: `name=${name}&pass=${pass}` })
     })
       .pipe(
-        filter(resultEmp => (resultEmp[0]?.name == name) && (resultEmp[0]?.pass == pass)),
+        filter( (resultEmp) =>{
+          return(resultEmp[0]?.name == name) && (resultEmp[0]?.pass == pass)}),
         catchError(this.errorHandler)
       );
   }
@@ -67,7 +68,7 @@ export class EmployeeService {
     );
   }
 
-  assignAsset(employee:Employee):Observable<Employee>{
+  updateEmployee(employee:Employee):Observable<Employee>{
     return this.http.put<Employee>(this.employeesUrl,employee).
     pipe(
       catchError(this.errorHandler)

@@ -1,0 +1,27 @@
+<div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-bordered table-responsive-sm">
+        <thead class="bg-primary">
+            <tr>
+                <th class="heading" scope="col">#</th>
+                <th class="heading" scope="col">Asset Name</th>
+                <th class="heading" scope="col">Requested Employee Name</th>
+                <th class="heading" scope="col">Status</th>
+                <th class="heading" scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let request of requests; index as i">
+                <td>{{i+1}}</td>
+                <td><a routerLink="/admin-asset/detail/{{request.requestedAssetId}}">{{request?.requestedAssetName}}</a>
+                </td>
+                <td><a routerLink="/admin-emp/detail/{{request.requestEmployeeId}}">{{request?.requestEmployeeName}}</a>
+                </td>
+                <td>{{request?.requestStatus}}</td>
+                <td>
+                    <button class="btn btn-sm bg-success">Accept</button>
+                    <button class="btn btn-sm bg-danger">Reject</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

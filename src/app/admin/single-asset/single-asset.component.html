@@ -1,0 +1,112 @@
+<!-- -------------------Button Group -------------- -->
+<div class="button-grp">
+    <button type="button" *ngIf="asset?.status=='On Repair'"  class="btn btn-primary assign-asset-btn" data-toggle="modal"
+        data-target="#statusChangeBackdrop" [disabled]="asset?.status=='Assigned'">Available</button>
+    <button type="button" *ngIf="asset?.status=='Available'"  class="btn btn-primary assign-asset-btn" data-toggle="modal"
+        data-target="#statusChangeBackdrop" [disabled]="asset?.status=='Assigned'">On Repair</button>
+    <button type="button" class="btn btn-danger assign-asset-btn" data-toggle="modal"
+        data-target="#removeAssetBackdrop" [disabled]="asset?.status!='Available'">Delete
+        Asset</button>
+</div>
+
+<!--------------------------- Status Change Backdrop ---------------->
+
+<div class="modal fade" id="statusChangeBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Remove Asset</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure ! To change Status ???
+            </div>
+            <div class="modal-footer">
+                <button type="button"  class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" (click)="changeStatus()" class="btn btn-primary" data-dismiss="modal">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------------------------- Remove Asset Backdrop ---------------->
+
+<div class="modal fade" id="removeAssetBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Remove Asset</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure ! You want to remove this Asset ???
+            </div>
+            <div class="modal-footer">
+                <button type="button"  class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" (click)="deleteAsset()" class="btn btn-primary" data-dismiss="modal">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- --------------------Info Table----------------------- -->
+
+<table class="table table-dark table-borderless">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Asset Name</th>
+            <th scope="col">{{asset?.assetName}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="bg-info">
+            <th scope="row">Asset ID</th>
+            <td>{{asset?.id}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Asset Category</th>
+            <td>{{asset?.assetCategory}}</td>
+        </tr>
+        <tr class="bg-info">
+            <th scope="row">Asset Unique ID</th>
+            <td>{{asset?.assetUniqueId}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Asset Status</th>
+            <td>{{asset?.status}}</td>
+        </tr>
+        <tr *ngIf="asset?.issuedEmployeeName" class="bg-info">
+            <th scope="row">Issued Employee Name</th>
+            <td><a routerLink="/admin-emp/detail/{{asset.issuedEmployeeId}}" class="employee-link">
+             {{asset.issuedEmployeeName}}
+             </a></td>
+        </tr>
+        <tr *ngIf="!asset?.issuedEmployeeName" class="bg-info">
+            <th scope="row">Issued Employee Name</th>
+            <td>Not Applicable</td>
+        </tr>
+        <tr >
+            <th scope="row">Issued Employee Id</th>
+            <td>{{asset?.issuedEmployeeId || "Not Applicable"}}</td>
+        </tr>
+        <tr *ngIf="issueDate" class="bg-info">
+            <th scope="row">Issue Date</th>
+            <td>{{issueDate | date:'medium'}}</td>
+        </tr>
+        <tr *ngIf="!issueDate" class="bg-info">
+            <th scope="row">Issue Date</th>
+            <td>Not Applicable</td>
+        </tr>
+        <tr *ngIf="submissionDate">
+            <th scope="row">Submission Date</th>
+            <td>{{submissionDate | date:'medium' || "Not Applicable"}}</td>
+        </tr>
+        <tr *ngIf="!submissionDate">
+            <th scope="row">Submission Date</th>
+            <td>Not Applicable</td>
+        </tr>
+    </tbody>
+</table>

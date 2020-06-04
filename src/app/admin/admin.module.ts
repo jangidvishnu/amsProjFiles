@@ -6,6 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmployeesDetailComponent } from './employees-detail/employees-detail.component';
 import { AssetsComponent } from './assets/assets.component';
 import { SingleEmployeeComponent } from './single-employee/single-employee.component';
+import { SingleAssetComponent } from './single-asset/single-asset.component';
+import { RequestsComponent } from './requests/requests.component';
 
 
 
@@ -14,7 +16,9 @@ import { SingleEmployeeComponent } from './single-employee/single-employee.compo
   declarations: [AdminComponent,
     EmployeesDetailComponent,
     AssetsComponent,
-    SingleEmployeeComponent],
+    SingleEmployeeComponent,
+    SingleAssetComponent,
+    RequestsComponent],
   imports: [
     CommonModule,
     FormsModule,

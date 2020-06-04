@@ -3,100 +3,50 @@
 .button-grp {
     display: flex;
     flex-direction: row-reverse;
-    margin: 0px 40px;
-}
-
-.search-result {
-    overflow-y: auto;
-    max-height: 10vh;
-    border: 1px solid gray;
-}
-
-.search-result li {
-    border-bottom: 1px solid gray;
-    border-left: 1px solid gray;
-    border-right: 1px solid gray;
-    padding-left: 2px;
-    background-color: white;
-    cursor: pointer;
-    list-style-type: none;
-}
-
-.search-result li:hover {
-    background-color: #607D8B;
-}
-
-.search-result li a {
-    color: #888;
-    display: block;
-    text-decoration: none;
-}
-
-.search-result li a:hover {
-    color: white;
-}
-
-.search-result li a:active {
-    color: white;
+    margin-right: 5vw;
 }
 
 #search-box {
     width: auto;
 }
 
-ul.search-result {
-    margin-top: 0;
-    padding-left: 0;
-}
-
 #search-component {
     margin-right: 5px;
 }
 
-
 /* -------------Assets List -----------------------*/
 
-.list-group {
-    margin: 20px 35px;
-    max-height: 70vh;
-    overflow-y: auto;
-    border: 1px solid rgb(211, 202, 202);
+.table{
+    margin: 0px;
 }
 
-.list-group .active {
+.my-custom-scrollbar {
+    width: 90vw;
+    margin: 3vh auto;
+    position: relative;
+    max-height: 60vh;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+    border: 1px solid #dee2e6;
+}
+
+.heading {
+    background-color: #007bff;
     position: sticky;
-    left: 0px;
     top: 0px;
+    text-align: center;
 }
 
-.remove-badge {
-    margin-right: 5px;
-    background-color: red;
-}
-
-.remove-badge:focus {
-    outline: none;
+.table td {
+    text-align: center;
 }
 
 .asset-link {
     text-decoration-line: none;
 }
-
-.assignedEmployeeBadge {
-    text-align: start;
-    position: absolute;
-    left: 45%;
-}
-
-.employee-link {
-    text-decoration-line: none;
-}
-
-.list-title {
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
 
 /* ----------Add Employee Modal ------------ */
 
@@ -105,16 +55,9 @@ ul.search-result {
     padding-left: 8px;
 }
 
-
 /* ---------------- Media Queries ----------- */
 
 @media (max-width:312px) {
-    .list-group {
-        margin: 0px 10px;
-        height: 60vh;
-        overflow-y: auto;
-        border: 1px solid rgb(211, 202, 202);
-    }
     .button-grp {
         margin: 10px 10px;
     }
@@ -127,10 +70,19 @@ ul.search-result {
     .list-title {
         border-left: 1px solid black;
     }
+    .list-group {
+        margin: 0px 10px;
+        height: 60vh;
+    }
 }
 
 @media (min-width:400px) {
     .add-asset-btn {
         max-height: 40px;
+    }
+    .assignedEmployeeBadge {
+        text-align: start;
+        position: absolute;
+        left: 47%;
     }
 }

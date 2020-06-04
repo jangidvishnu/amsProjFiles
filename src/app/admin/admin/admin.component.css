@@ -9,7 +9,7 @@
 /*----------- Roting Navigation ------------- */
 
 .router-link {
-    margin: 0px 7px;
+    margin: 5px 0.9vw;
     border-radius: 4px;
     padding: .375rem .75rem;
     background-color: #cfd3d5;

@@ -71,7 +71,7 @@ ul.search-result {
 .selected-assets .search-result{
     min-height: 5vh;
 }
-/* -----------Employee Info------------- */
+/* -----------Employee Info and List Info------------- */
 
 .info-div {
     margin: 30px 35px;
@@ -96,7 +96,7 @@ ul.search-result {
 }
 
 .list-info-div {
-    margin: 0px 35px;
+    margin: 0px 5vw;
 }
 
 .list-info-line {
@@ -111,22 +111,34 @@ ul.search-result {
     margin-bottom: 0px;
 }
 
+
+
 /* Assign Asset Button */
 
 .button-grp {
     display: flex;
     flex-direction: row-reverse;
-    margin: 0px 40px;
+    margin: 10px 40px;
+    margin-right: 5vw;
+}
+
+.assign-asset-btn{
+    margin-left: 1vw;
 }
 
 /* -------------Assets List -----------------------*/
 
 .list-group {
-    margin: 0px 35px;
+    margin: 0px 5vw;
     max-height: 60vh;
     overflow-y: auto;
     border: 1px solid rgb(211, 202, 202);
     border-top-left-radius: 0px;
+}
+
+.list-group .list-group-item
+{
+    padding: .75rem 0.5rem;
 }
 
 .list-group .active {
@@ -186,12 +198,13 @@ ul.search-result {
 @media (max-width:312px) {
     .list-group {
         margin: 0px 10px;
-        height: 60vh;
+        max-height: 60vh;
         overflow-y: auto;
         border: 1px solid rgb(211, 202, 202);
     }
     .info-div {
         margin: 20px 10px;
+        overflow: auto;
     }
     .list-info-div {
         margin-left: 10px;
