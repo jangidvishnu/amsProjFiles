@@ -1,0 +1,21 @@
+
+<!--------------- Employee Info------------------ -->
+
+<div class="info-div">
+    <h1 class="info-line"><span class="name-label">Employee Id : </span><span
+            class="label-value">{{employee?.id}}</span></h1>
+    <h1 class="info-line float-right"><span class="name-label">Employee Name : </span><span
+            class="label-value">{{employee?.name}}</span></h1>
+</div>
+
+
+
+<!-- Router Links -->
+
+<a [routerLink]="[{outlets: {employeeR: 'dashboard'}}]" class="btn router-link" style="margin-left: 35px;" routerLinkActive="active">Dashboard</a>
+<a [routerLink]="[ {outlets: {employeeR: 'reqHist'}}]" class="btn router-link" routerLinkActive="active">Request History</a>
+<hr class="separator-line">
+
+<!-- Router Outlet -->
+
+<router-outlet name="employeeR"></router-outlet>

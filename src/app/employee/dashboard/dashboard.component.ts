@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../login.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EmployeeService } from '../employee.service';
-import { Employee } from '../employee';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { Mobile } from '../assetClasses/mobile';
-import { Books } from '../assetClasses/books';
-import { Laptop } from '../assetClasses/laptop';
-import { DesktopPC } from '../assetClasses/desktop-pc';
-import { debounceTime, switchMap, distinctUntilChanged } from 'rxjs/operators';
-import { AssetService } from '../asset.service';
-import { RequestAssetService } from '../request-asset.service';
-import { RequestAsset } from '../request-asset';
+import { debounceTime, switchMap, distinctUntilChanged, map } from 'rxjs/operators';
+import { LoginService } from 'src/app/login.service';
+import { Employee } from 'src/app/employee';
+import { Books } from 'src/app/assetClasses/books';
+import { Mobile } from 'src/app/assetClasses/mobile';
+import { DesktopPC } from 'src/app/assetClasses/desktop-pc';
+import { Laptop } from 'src/app/assetClasses/laptop';
+import { EmployeeService } from 'src/app/employee.service';
+import { AssetService } from 'src/app/asset.service';
+import { RequestAssetService } from 'src/app/request-asset.service';
+import { RequestAsset } from 'src/app/request-asset';
 
 @Component({
-  selector: 'app-employee',
-  templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.css']
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css']
 })
-export class EmployeeComponent implements OnInit {
+export class DashboardComponent implements OnInit {
 
   private id: number;
   public employee: Employee;
@@ -33,18 +33,10 @@ export class EmployeeComponent implements OnInit {
   }
   )
 
-  constructor(private loginService: LoginService, private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
     private employeeService: EmployeeService, private router: Router,
     private assetService: AssetService, private requestAssetService: RequestAssetService) {
-    this.id = +this.route.snapshot.paramMap.get('id');
-    if (this.loginService.ifLoggedIn('employeeid' + this.id)) {
-      //nothing to do
-    }
-    else {
-      alert("You are not Logged In ! Log in First");
-      this.router.navigate(['']);
-    }
-
+      this.id = +this.route.parent.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
@@ -71,7 +63,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   clearAsset() {
-    this.selectedAsset= undefined;
+    this.selectedAsset = undefined;
   }
 
   addSelectedAssets(asset: Mobile | Books | Laptop | DesktopPC) {
@@ -87,13 +79,14 @@ export class EmployeeComponent implements OnInit {
   requestAsset() {
     let submissionDate: Date = this.requestAssetForm.get('submissionDateInput').value;
     this.requestAssetService.makeRequest({
-      requestEmployeeName: this.employee.name,requestedAssetName:this.selectedAsset.assetName,
+      requestEmployeeName: this.employee.name, requestedAssetName: this.selectedAsset.assetName,
       requestEmployeeId: this.id, submissionDate: submissionDate, requestedAssetId: this.selectedAsset.id,
       requestStatus: 'Pending'
-    }  as RequestAsset ).subscribe(
+    } as RequestAsset).subscribe(
     );
-    this.selectedAsset=undefined;
-    this.requestAssetForm.setValue({submissionDateInput:''});
+    this.selectedAsset = undefined;
+    this.requestAssetForm.setValue({ submissionDateInput: '' });
     this.search('');
   }
+
 }

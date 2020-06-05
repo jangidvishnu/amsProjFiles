@@ -1,0 +1,51 @@
+
+/*----------- Roting Navigation ------------- */
+
+.router-link {
+    margin: 5px 0.9vw;
+    border-radius: 4px;
+    padding: .2rem .6rem;
+    background-color: #cfd3d5;
+    text-decoration: none;
+    color: black;
+}
+
+.router-link:hover {
+    color: blue;
+}
+
+.active {
+    color: blue;
+}
+
+
+/*----------- hr line ------------- */
+
+.separator-line {
+    margin: 10px 0px;
+}
+
+/* -----------Employee Info --------------------- */
+
+.info-div {
+    margin: 30px 35px;
+    margin-bottom: 5px;
+}
+
+.info-line {
+    margin-bottom: 5px;
+    font-size: 1.5rem;
+    background-color: #f6f6f6;
+    display: inline-block;
+    border-radius: 2px;
+}
+
+.name-label {
+    font-size: 1.5rem;
+    background-color: transparent;
+}
+
+.label-value {
+    padding-right: 2px;
+    padding-left: 2px;
+}

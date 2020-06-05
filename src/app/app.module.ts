@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminModule } from './admin/admin.module'
-import { EmployeeComponent } from './employee/employee.component';
 
 import { HttpClientModule }    from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -13,11 +12,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { AdminRoutingModule } from './admin/admin-routing.module';
+import { EmployeeModule } from './employee/employee.module';
+import { EmployeeRoutingModule } from './employee/employee-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EmployeeComponent,
     LoginComponent,
     PagenotfoundComponent,
   ],
@@ -29,7 +29,9 @@ import { AdminRoutingModule } from './admin/admin-routing.module';
       InMemoryDataService, { dataEncapsulation: false }
     ),
     AdminModule,
+    EmployeeModule,
     AdminRoutingModule,
+    EmployeeRoutingModule,
     AppRoutingModule
     
   ],
