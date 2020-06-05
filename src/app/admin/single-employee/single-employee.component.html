@@ -8,6 +8,49 @@
 
 <hr class="separator-line">
 
+<!-- ------------------Assign Asset Button--------- -->
+
+<div class="button-grp">
+    <button type="button" class="btn btn-primary assign-asset-btn" data-toggle="modal"
+        data-target="#assignAssetModal">Assign
+        Asset</button>
+    <button type="button" class="btn btn-danger assign-asset-btn" data-toggle="modal"
+        data-target="#removeEmpBackdrop">Delete
+        Employee</button>
+
+</div>
+
+<!--------------------- Asset Table ---------------------->
+
+<div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-bordered table-responsive-sm">
+        <thead class="bg-primary">
+            <tr>
+                <th class="heading" scope="col">#</th>
+                <th class="heading" scope="col">Asset Name</th>
+                <th class="heading" scope="col">Issue Date</th>
+                <th class="heading" scope="col">Submission Date</th>
+                <th class="heading" scope="col">Un-Assign</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let asset of assetList; index as i">
+                <td>{{i+1}}</td>
+                <td><a class="asset-link" routerLink="/admin-asset/detail/{{asset.id}}">{{asset.assetName}}</a>
+                </td>
+                <td>{{asset.issueDate | date:'medium'}}</td>
+                <td>{{asset.submissionDate | date:'medium'}}</td>
+                <td>
+                    <button type="button" (click)="setUnassignAssetId(asset.id)"
+                        class="remove-badge badge badge-primary badge-pill" data-toggle="modal"
+                        data-target="#unassignAssetBackdrop">X
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
 <!--------------------------- Unassign Asset Backdrop ---------------->
 
 <div class="modal fade" id="unassignAssetBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
@@ -35,7 +78,8 @@
 
 <!--------------------------- Remove Employee Backdrop ---------------->
 
-<div class="modal fade" id="removeEmpBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="removeEmpBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -48,8 +92,9 @@
                 Are you sure ! You want to remove this employee ???
             </div>
             <div class="modal-footer">
-                <button type="button"  class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button type="button" (click)="deleteEmployee()" class="btn btn-primary" data-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" (click)="deleteEmployee()" class="btn btn-primary"
+                    data-dismiss="modal">Yes</button>
             </div>
         </div>
     </div>
@@ -113,35 +158,3 @@
         </div>
     </div>
 </div>
-
-<!-- ------------------Assign Asset Button--------- -->
-
-<div class="button-grp">
-    <button type="button" class="btn btn-primary assign-asset-btn" data-toggle="modal"
-        data-target="#assignAssetModal">Assign
-        Asset</button>
-    <button type="button" class="btn btn-danger assign-asset-btn" data-toggle="modal"
-        data-target="#removeEmpBackdrop" >Delete
-        Employee</button>
-
-</div>
-
-<!--------------------- Asset List ---------------------->
-
-<div class="list-info-div">
-    <h1 class="list-info-line">Assigned Assets</h1>
-</div>
-<ul class="list-group">
-    <li class="list-group-item d-flex justify-content-between align-items-center active">
-        Assets Name
-        <span style="margin-left: 3px;">Un-assign Asset</span>
-    </li>
-    <li *ngFor="let asset of assetList" class="list-group-item d-flex justify-content-between align-items-center">
-        <a routerLink="/admin-asset/detail/{{asset.id}}" class="asset-link">
-            {{asset.assetName}}
-        </a>
-        <button type="button" (click)="setUnassignAssetId(asset.id)" class="remove-badge badge badge-primary badge-pill"
-            data-toggle="modal" data-target="#unassignAssetBackdrop">X
-        </button>
-    </li>
-</ul>

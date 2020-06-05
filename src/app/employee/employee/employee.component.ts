@@ -27,11 +27,11 @@ export class EmployeeComponent implements OnInit {
       alert("You are not Logged In ! Log in First");
       this.router.navigate(['']);
     }
-
   }
 
   ngOnInit(): void {
     this.getEmployee();
+    this.router.navigateByUrl('/employee/'+this.id+'/(employeeR:dashboard)');
   }
 
   getEmployee() {

@@ -15,7 +15,7 @@
 
 .my-custom-scrollbar {
     width: 90vw;
-    margin: 3vh auto;
+    margin: 0px auto;
     position: relative;
     max-height: 60vh;
     overflow: auto;
@@ -39,6 +39,16 @@
 
 .table td a{
     text-decoration: none;
+}
+
+.table-caption{
+    padding:5px;
+    margin: 0px;
+    margin-top:2vh;
+    margin-left: 5vw;
+    background-color: #007bff;
+    border-radius: 12px 12px 0px 0px;
+    border: 1px solid #dee2e6;
 }
 
 /* ----------Requet Asset Modal---------- */
@@ -115,26 +125,26 @@ ul.search-result {
     min-height: 5vh;
 }
 
-/* ------------------Media Queries----------- */
+/* ----Media Queries------- */
 
-@media (max-width:390px) {
-    .info-line {
-        font-size: 1rem;
-    }
-    .name-label {
-        font-size: 1rem;
-    }
-    .list-info-line {
-        font-size: 1rem;
+@media (max-width:312px){
+    .table-caption{
+        font-size: 0.6rem;
     }
 }
 
-@media (max-width:312px) {
-    .info-div {
-        margin: 20px 10px;
-        overflow: auto;
+
+@media (max-width:500px) {
+    #search-component {
+        flex-direction: column;
     }
-    .list-info-div {
-        margin-left: 10px;
+    .selected-assets {
+        width: 90%;
+        margin-left: auto;
     }
+    
+    .ass-selection {
+        width: 90%;
+    }
+    
 }

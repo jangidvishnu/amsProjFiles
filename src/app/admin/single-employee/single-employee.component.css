@@ -113,7 +113,7 @@ ul.search-result {
 
 
 
-/* Assign Asset Button */
+/*--------- Assign Asset Button------------ */
 
 .button-grp {
     display: flex;
@@ -126,38 +126,43 @@ ul.search-result {
     margin-left: 1vw;
 }
 
-/* -------------Assets List -----------------------*/
+/* -------------Assets Table -----------------------*/
 
-.list-group {
-    margin: 0px 5vw;
+.table {
+    margin: 0px;
+}
+
+.my-custom-scrollbar {
+    width: 90vw;
+    margin: 3vh auto;
+    position: relative;
     max-height: 60vh;
-    overflow-y: auto;
-    border: 1px solid rgb(211, 202, 202);
-    border-top-left-radius: 0px;
+    overflow: auto;
 }
 
-.list-group .list-group-item
-{
-    padding: .75rem 0.5rem;
+.table-wrapper-scroll-y {
+    display: block;
+    border: 1px solid #dee2e6;
 }
 
-.list-group .active {
+.heading {
+    background-color: #007bff;
     position: sticky;
-    left: 0px;
     top: 0px;
+    text-align: center;
 }
 
-.remove-badge {
-    margin-right: 5px;
-    background-color: red;
+.table td {
+    text-align: center;
 }
 
-.remove-badge:focus {
-    outline: none;
+.table td a {
+    text-decoration: none;
 }
 
-.asset-link {
-    text-decoration-line: none;
+.table button {
+    padding: .1rem .5rem;
+    background-color: crimson;
 }
 
 /*------------------ Utilities-------------------- */
@@ -190,24 +195,12 @@ ul.search-result {
     .name-label {
         font-size: 1rem;
     }
-    .list-info-line {
-        font-size: 1rem;
-    }
 }
 
 @media (max-width:312px) {
-    .list-group {
-        margin: 0px 10px;
-        max-height: 60vh;
-        overflow-y: auto;
-        border: 1px solid rgb(211, 202, 202);
-    }
     .info-div {
         margin: 20px 10px;
         overflow: auto;
-    }
-    .list-info-div {
-        margin-left: 10px;
     }
     .button-grp {
         margin: 10px 10px;

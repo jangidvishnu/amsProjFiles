@@ -2,7 +2,8 @@
 /*----------- Roting Navigation ------------- */
 
 .router-link {
-    margin: 5px 0.9vw;
+    margin: 5px 0px;
+    margin-left: 10px;
     border-radius: 4px;
     padding: .2rem .6rem;
     background-color: #cfd3d5;
@@ -17,7 +18,9 @@
 .active {
     color: blue;
 }
-
+.router-div{
+    margin-left: 25px;
+}
 
 /*----------- hr line ------------- */
 
@@ -30,6 +33,7 @@
 .info-div {
     margin: 30px 35px;
     margin-bottom: 5px;
+    overflow-y: auto;
 }
 
 .info-line {
@@ -48,4 +52,24 @@
 .label-value {
     padding-right: 2px;
     padding-left: 2px;
+}
+/* =-------- Media Queries--------- */
+@media (max-width:390px) {
+    .info-line {
+        font-size: 1rem;
+    }
+    .name-label {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width:312px) {
+    .info-div {
+        margin: 20px 10px;
+        overflow: auto;
+    }
+    .router-div{
+        margin-left: 0px;
+    }
+
 }

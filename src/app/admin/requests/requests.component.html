@@ -1,3 +1,5 @@
+<!-- -----------Request Table------------ -->
+
 <div class="table-wrapper-scroll-y my-custom-scrollbar">
     <table class="table table-bordered table-responsive-sm">
         <thead class="bg-primary">
@@ -5,7 +7,7 @@
                 <th class="heading" scope="col">#</th>
                 <th class="heading" scope="col">Asset Name</th>
                 <th class="heading" scope="col">Requested Employee Name</th>
-                <th class="heading" scope="col">Status</th>
+                <th class="heading" scope="col">Requested Submission Date</th>
                 <th class="heading" scope="col">Action</th>
             </tr>
         </thead>
@@ -16,12 +18,64 @@
                 </td>
                 <td><a routerLink="/admin-emp/detail/{{request.requestEmployeeId}}">{{request?.requestEmployeeName}}</a>
                 </td>
-                <td>{{request?.requestStatus}}</td>
+                <td>{{request.submissionDate | date:'medium'}}</td>
                 <td>
-                    <button class="btn btn-sm bg-success">Accept</button>
-                    <button class="btn btn-sm bg-danger">Reject</button>
+                    <button  class="btn btn-sm bg-success" data-toggle="modal"
+                        data-target="#acceptRequestBackdrop" (click)="conAcceptRequest(request.id)">Accept</button>
+                    <button class="btn btn-sm bg-danger" type="button" (click)="conRejectRequest(request.id)" data-toggle="modal"
+                    data-target="#rejectRequestBackdrop">Reject</button>
                 </td>
             </tr>
         </tbody>
     </table>
+</div>
+
+<!--------------------------- Confirm Accept Request Backdrop ---------------->
+
+<div class="modal fade" id="acceptRequestBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Accept Request</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure ! You want to accept this request ???
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="resetAcceptPara()" class="btn btn-secondary"
+                    data-dismiss="modal">No</button>
+                <button type="button" (click)="acceptRequest()" class="btn btn-primary"
+                    data-dismiss="modal">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--------------------------- Confirm Reject Request Backdrop ---------------->
+
+<div class="modal fade" id="rejectRequestBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Accept Request</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure ! You want to reject this request ???
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="resetRejectPara()" data-dismiss="modal">No</button>
+                <button type="button"  class="btn btn-primary" (click)="rejectRequest()"
+                    data-dismiss="modal">Yes</button>
+            </div>
+        </div>
+    </div>
 </div>

@@ -10,28 +10,13 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent {
 
-  constructor(private router: Router, private loginService: LoginService,
-    private activatedRoute: ActivatedRoute) { }
-  title = 'ams';
-  // routerUrl=this.router.url;
-  isAdminActive = false;
-  isEmployeeActive = false;
-
+  constructor(private router: Router, private loginService: LoginService) { }
+  title = 'AMS';
   ngOnInit(){
   }
 
   logout(){
     this.loginService.logout();
     this.router.navigate(['']);
-  }
-
-  onAdminClick() {
-    this.isAdminActive = true;
-    this.isEmployeeActive = false;
-  }
-
-  onEmployeeClick() {
-    this.isAdminActive = false;
-    this.isEmployeeActive = true;
   }
 }
