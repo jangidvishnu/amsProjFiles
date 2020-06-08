@@ -17,9 +17,9 @@ import { Books } from 'src/app/assetClasses/books';
 export class AssetsComponent implements OnInit {
 
   searchedAssets$: Observable<any>;
-  removeAssetId: number;
   assets: any[];
   private searchTerms = new Subject<string>();
+  addedSuccessMessage:string;
 
   constructor(private assetService: AssetService) { }
 
@@ -78,28 +78,15 @@ export class AssetsComponent implements OnInit {
       this.assetService.addAsset(mobileObj)
       .subscribe(assetAdded => this.assets.push(assetAdded));
     }
+    this.addedSuccessMessage="Asset is successfully added";
     this.addAssetForm.setValue({ name: "", unid: "",category:"" });
     this.getAssets();
   }
 
-  deleteAsset() {
-    if (this.removeAssetId != null) {
-      this.assetService.deleteAsset(this.removeAssetId)
-        .subscribe();
-      this.getAssets();
-      this.removeAssetId = null;
-    }
-  }
-
-  setRemoveAssetId(id: number) {
-    this.removeAssetId=id;
-  }
-
-  resetRemoveAssetId() {
-    this.removeAssetId = null;
-  }
-
   search(term: string): void {
     this.searchTerms.next(term);
+  }
+  resetAddedSuccessMessage(){
+    this.addedSuccessMessage=undefined;
   }
 }

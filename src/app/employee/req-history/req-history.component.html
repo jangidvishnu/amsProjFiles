@@ -3,16 +3,24 @@
     <table class="table table-bordered table-responsive-sm">
         <thead class="bg-primary">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Asset Name</th>
-                <th scope="col">Issue Date</th>
-                <th scope="col">Submission Date</th>
+                <th scope="col" class="heading">#</th>
+                <th scope="col" class="heading">Request ID</th>
+                <th scope="col" class="heading">Asset Name</th>
+                <th scope="col" class="heading">Requested Submission Date</th>
+                <th scope="col" class="heading">Status</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let request of requests; index as ind">
-                <th scope="row">{{ind+1}}</th>
-                <td>{{request?.id}}</td>
+                <td style="font-weight: bold;">{{ind+1}}</td>
+                <td style="font-weight: bold;">{{request?.id}}</td>
+                <td>{{request?.requestedAssetName}}</td>
+                <td>{{request?.submissionDate}}</td>
+                <td
+                    [class]="{'bg-success':request?.requestStatus=='Accepted',
+                    'bg-danger':request?.requestStatus=='Rejected',
+                    'bg-info':request?.requestStatus=='Pending'}">
+                    {{request?.requestStatus}}</td>
             </tr>
         </tbody>
     </table>

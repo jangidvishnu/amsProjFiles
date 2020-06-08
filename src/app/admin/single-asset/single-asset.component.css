@@ -14,8 +14,12 @@
 
 .table{
     width:70vw;
-    margin: 10vh auto;
+    margin: 6vh auto;
 }
+.table td{
+    font-weight: bold;
+}
+
 .employee-link {
     text-decoration-line: none;
     font-style: italic;

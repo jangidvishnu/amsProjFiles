@@ -5,6 +5,7 @@
         <thead class="bg-primary">
             <tr>
                 <th class="heading" scope="col">#</th>
+                <th class="heading" scope="col">Request ID</th>
                 <th class="heading" scope="col">Asset Name</th>
                 <th class="heading" scope="col">Requested Employee Name</th>
                 <th class="heading" scope="col">Requested Submission Date</th>
@@ -13,7 +14,8 @@
         </thead>
         <tbody>
             <tr *ngFor="let request of requests; index as i">
-                <td>{{i+1}}</td>
+                <td style="font-weight: bold;">{{i+1}}</td>
+                <td style="font-weight: bold;">{{request?.id}}</td>
                 <td><a routerLink="/admin-asset/detail/{{request.requestedAssetId}}">{{request?.requestedAssetName}}</a>
                 </td>
                 <td><a routerLink="/admin-emp/detail/{{request.requestEmployeeId}}">{{request?.requestEmployeeName}}</a>

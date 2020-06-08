@@ -49,6 +49,7 @@
     background-color: #007bff;
     border-radius: 12px 12px 0px 0px;
     border: 1px solid #dee2e6;
+    font-weight: bold;
 }
 
 /* ----------Requet Asset Modal---------- */
@@ -127,9 +128,9 @@ ul.search-result {
 
 /* ----Media Queries------- */
 
-@media (max-width:312px){
-    .table-caption{
-        font-size: 0.6rem;
+@media (max-width:312px) {
+    .button-grp {
+        margin: 10px 10px;
     }
 }
 

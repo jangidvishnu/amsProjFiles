@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { debounceTime, switchMap, distinctUntilChanged, map } from 'rxjs/operators';
-import { LoginService } from 'src/app/login.service';
+import { debounceTime, switchMap, distinctUntilChanged } from 'rxjs/operators';
 import { Employee } from 'src/app/employee';
 import { Books } from 'src/app/assetClasses/books';
 import { Mobile } from 'src/app/assetClasses/mobile';
@@ -27,6 +26,7 @@ export class DashboardComponent implements OnInit {
   selectedAsset: Mobile | Books | DesktopPC | Laptop;
   searchedAssets$: Observable<any>;
   private searchTerms = new Subject<string>();
+  requestSuccessMessage:string;
 
   requestAssetForm = new FormGroup({
     submissionDateInput: new FormControl("", [Validators.required])
@@ -84,9 +84,13 @@ export class DashboardComponent implements OnInit {
       requestStatus: 'Pending'
     } as RequestAsset).subscribe(
     );
+    this.requestSuccessMessage="Request Sent Successfully";
     this.selectedAsset = undefined;
     this.requestAssetForm.setValue({ submissionDateInput: '' });
     this.search('');
   }
 
+  resetRequestSuccessMessage(){
+    this.requestSuccessMessage=undefined;
+  }
 }

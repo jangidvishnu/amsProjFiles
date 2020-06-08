@@ -1,8 +1,7 @@
-
 <!-------------------- Request Asset---------------- -->
 
 <div class="button-grp">
-    <button type="button" class="btn btn-primary add-emp-btn" data-toggle="modal"
+    <button type="button" (click)="resetRequestSuccessMessage()" class="btn btn-primary add-emp-btn" data-toggle="modal"
         data-target="#requestAssetModal">Request
         Asset</button>
 </div>
@@ -13,15 +12,15 @@
     <table class="table table-bordered table-responsive-sm">
         <thead class="bg-primary">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Asset Name</th>
-                <th scope="col">Issue Date</th>
-                <th scope="col">Submission Date</th>
+                <th scope="col" class="heading">#</th>
+                <th scope="col" class="heading">Asset Name</th>
+                <th scope="col" class="heading">Issue Date</th>
+                <th scope="col" class="heading">Submission Date</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let asset of assetList; index as ind">
-                <th scope="row">{{ind+1}}</th>
+                <td style="font-weight: bold;">{{ind+1}}</td>
                 <td>{{asset?.assetName}}</td>
                 <td>{{asset?.issueDate | date:'medium'}}</td>
                 <td>{{asset?.submissionDate | date:'medium' }}</td>
@@ -67,7 +66,7 @@
                     <span style="margin:auto">&#8594;</span>
                     <div class="selected-assets">
                         <ul class="search-result">
-                            <li *ngIf="selectedAsset" >
+                            <li *ngIf="selectedAsset">
                                 {{selectedAsset.assetName}}
                             </li>
                         </ul>
@@ -85,6 +84,9 @@
                             [disabled]="!requestAssetForm.valid || !selectedAsset">Request</button>
                     </div>
                 </form>
+                <div *ngIf="requestSuccessMessage" class="alert alert-success" role="alert">
+                    {{requestSuccessMessage}}
+                </div>
             </div>
         </div>
     </div>

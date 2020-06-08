@@ -8,6 +8,7 @@ import { Books } from 'src/app/assetClasses/books';
 import { Laptop } from 'src/app/assetClasses/laptop';
 import { DesktopPC } from 'src/app/assetClasses/desktop-pc';
 import { EmployeeService } from 'src/app/employee.service';
+import { AdminComponent } from '../admin/admin.component';
 
 @Component({
   selector: 'app-requests',
@@ -76,6 +77,7 @@ export class RequestsComponent implements OnInit {
     this.activeRequest = undefined;
     this.activeRequestEmployee = undefined;
     this.activeRequestedAsset = undefined;
+    AdminComponent.setRequestCount(this.requests.length-1);
   }
 
   resetAcceptPara() {   //reset all active request params
@@ -103,6 +105,7 @@ export class RequestsComponent implements OnInit {
     this.getRequestsList();
     //reset param after rejection
     this.activeRequest=undefined;
+    AdminComponent.setRequestCount(this.requests.length-1);
   }
 
 }

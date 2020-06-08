@@ -8,6 +8,7 @@ import { Employee } from '../employee';
 import { Router } from '@angular/router';
 import { error } from 'protractor';
 import { LoginService } from '../login.service';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-login',
@@ -44,6 +45,7 @@ export class LoginComponent implements OnInit {
       .subscribe(adm => {
         if (adm[0] != undefined) {
           this.loginService.login('admin');
+          AppComponent.setLoginStatus();
           this.router.navigate(['admin']);
         }
 
@@ -56,6 +58,7 @@ export class LoginComponent implements OnInit {
       .subscribe(emp => {
         if (emp[0] != undefined) {
           this.loginService.login('employeeid' + emp[0].id);
+          AppComponent.setLoginStatus();
           this.router.navigate(['employee/' + emp[0].id]);
         }
       }, error => { console.log(error); }

@@ -1,7 +1,7 @@
 <!--  ---------- Add Employee Button and  Search Bar   ------------   -->
 
 <div class="button-grp">
-    <button type="button" class="btn btn-primary add-emp-btn" data-toggle="modal" data-target="#addEmployeeModal">Add
+    <button type="button" (click)="resetAddedSuccessMessage()" class="btn btn-primary add-emp-btn" data-toggle="modal" data-target="#addEmployeeModal">Add
         Employee</button>
     <div id="search-component">
         <div class="input-group input-group-sm ">
@@ -11,6 +11,42 @@
         </div>
     </div>
 </div>
+
+<!----------------------- Employees List -------------------->
+
+<div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-bordered table-responsive-sm">
+        <thead class="bg-primary">
+            <tr >
+                <th class="heading" scope="col">Emp. ID</th>
+                <th class="heading" scope="col">Employee Name</th>
+                <th class="heading" scope="col">Number Of Assets</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of searchedEmployees$ | async ">
+                <td style="font-weight: bold;">{{employee.id}}</td>
+                <td><a routerLink="/admin-emp/detail/{{employee.id}}" class="employee-link">
+                        {{employee.name}}
+                    </a></td>
+                <td>{{employee.assignedAssets.length}}</td>
+            </tr>
+            <tr *ngFor="let employee of employees">
+                <td style="font-weight: bold;">{{employee.id}}</td>
+                <td><a routerLink="/admin-emp/detail/{{employee.id}}" class="employee-link">
+                        {{employee.name}}
+                    </a></td>
+                <td>{{employee.assignedAssets.length}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!--  ------------  Error Messages --------------->
+
+<div *ngIf="errorMsg ">
+    Error Occured: {{errorMsg}}
+</div>
+
 
 <!--   -------------   add Employee Modal    -------------  -->
 
@@ -40,40 +76,10 @@
                             [disabled]="!addEmployeeForm.valid">Add Employee</button>
                     </div>
                 </form>
+                <div *ngIf="addedSuccessMessage" class="alert alert-success" role="alert">
+                    {{addedSuccessMessage}}
+                  </div>
             </div>
         </div>
     </div>
-</div>
-<!----------------------- Employees List -------------------->
-<div class="table-wrapper-scroll-y my-custom-scrollbar">
-    <table class="table table-bordered table-responsive-sm">
-        <thead class="bg-primary">
-            <tr >
-                <th class="heading" scope="col">E. ID</th>
-                <th class="heading" scope="col">Employee Name</th>
-                <th class="heading" scope="col">Number Of Assets</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let employee of searchedEmployees$ | async ">
-                <td>{{employee.id}}</td>
-                <td><a routerLink="/admin-emp/detail/{{employee.id}}" class="employee-link">
-                        {{employee.name}}
-                    </a></td>
-                <td>{{employee.assignedAssets.length}}</td>
-            </tr>
-            <tr *ngFor="let employee of employees">
-                <td>{{employee.id}}</td>
-                <td><a routerLink="/admin-emp/detail/{{employee.id}}" class="employee-link">
-                        {{employee.name}}
-                    </a></td>
-                <td>{{employee.assignedAssets.length}}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<!--  ------------  Error Messages --------------->
-
-<div *ngIf="errorMsg ">
-    Error Occured: {{errorMsg}}
 </div>

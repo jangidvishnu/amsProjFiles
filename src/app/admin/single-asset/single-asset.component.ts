@@ -6,6 +6,8 @@ import { Mobile } from 'src/app/assetClasses/mobile';
 import { Books } from 'src/app/assetClasses/books';
 import { Laptop } from 'src/app/assetClasses/laptop';
 import { DesktopPC } from 'src/app/assetClasses/desktop-pc';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-single-asset',
@@ -14,10 +16,17 @@ import { DesktopPC } from 'src/app/assetClasses/desktop-pc';
 })
 export class SingleAssetComponent implements OnInit {
 
-  asset: any;
+  asset: Mobile|Books|Laptop|DesktopPC;
   private id: number;
   issueDate: Date;
   submissionDate: Date;
+  editSuccessMessage : string;
+
+  editAssetForm = new FormGroup({
+    newName : new FormControl(''),
+    newUniqueId : new FormControl('')
+  }
+  );
 
   constructor(private route: ActivatedRoute, private loginService: LoginService,
     private router: Router, private assetService: AssetService) {
@@ -36,6 +45,7 @@ export class SingleAssetComponent implements OnInit {
         this.asset = asset;
         this.issueDate = asset.issueDate;
         this.submissionDate = asset.submissionDate;
+        this.editAssetForm.setValue({newName:asset.assetName,newUniqueId:asset.assetUniqueId});
       }
     );
   }
@@ -53,5 +63,17 @@ export class SingleAssetComponent implements OnInit {
       this.asset.status="Available";
     }
     this.assetService.updateAsset(this.asset).subscribe();
+  }
+
+  editAsset(){
+    this.asset.assetName=this.editAssetForm.get('newName').value;
+    this.asset.assetUniqueId=this.editAssetForm.get('newUniqueId').value;
+    this.editSuccessMessage="Your changes have been made !";
+    this.assetService.updateAsset(this.asset).subscribe();
+    this.editAssetForm.setValue({newName:this.asset.assetName,newUniqueId:this.asset.assetUniqueId});
+  }
+
+  resetEditSuccessMessage(){
+    this.editSuccessMessage=undefined;
   }
 }

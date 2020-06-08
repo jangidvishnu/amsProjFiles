@@ -1,7 +1,7 @@
 <!--  ---------- Add Asset Button and  Search Bar   ------------   -->
 
 <div class="button-grp">
-    <button type="button" class="btn btn-primary add-asset-btn" data-toggle="modal" data-target="#addAssetModal">Add
+    <button type="button" class="btn btn-primary add-asset-btn" (click)="resetAddedSuccessMessage()" data-toggle="modal" data-target="#addAssetModal">Add
         Asset</button>
     <div id="search-component">
         <div class="input-group input-group-sm ">
@@ -11,6 +11,43 @@
         </div>
     </div>
 </div>
+
+<!----------------------- Asset List -------------------->
+<div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-bordered table-responsive-sm">
+        <thead class="bg-primary">
+            <tr>
+                <th class="heading" scope="col">Asset ID</th>
+                <th class="heading" scope="col">Asset Name</th>
+                <th class="heading" scope="col">Asset Category</th>
+                <th class="heading" scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let asset of searchedAssets$ | async ">
+                <td style="font-weight: bold;">{{asset.id}}</td>
+                <td><a routerLink="/admin-asset/detail/{{asset.id}}" class="asset-link">
+                        {{asset.assetName}}
+                    </a></td>
+                <td>{{asset.assetCategory}}</td>
+                <td
+                    [class]="{'bg-success':asset.status=='Available','bg-danger':asset.status=='Assigned','bg-info':asset.status=='On Repair'}">
+                    {{asset.status}}</td>
+            </tr>
+            <tr *ngFor="let asset of assets">
+                <td style="font-weight: bold;">{{asset.id}}</td>
+                <td><a routerLink="/admin-asset/detail/{{asset.id}}" class="asset-link">
+                        {{asset.assetName}}
+                    </a></td>
+                <td>{{asset.assetCategory}}</td>
+                <td
+                    [class]="{'bg-success':asset.status=='Available','bg-danger':asset.status=='Assigned','bg-secondary':asset.status=='On Repair'}">
+                    {{asset.status}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
 
 <!--   -------------   add Asset Modal    -------------  -->
 
@@ -49,43 +86,10 @@
                             Asset</button>
                     </div>
                 </form>
+                <div *ngIf="addedSuccessMessage" class="alert alert-success" role="alert">
+                    {{addedSuccessMessage}}
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-<!----------------------- Employees List -------------------->
-<div class="table-wrapper-scroll-y my-custom-scrollbar">
-    <table class="table table-bordered table-responsive-sm">
-        <thead class="bg-primary">
-            <tr>
-                <th class="heading" scope="col">A. ID</th>
-                <th class="heading" scope="col">Asset Name</th>
-                <th class="heading" scope="col">Asset Category</th>
-                <th class="heading" scope="col">Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let asset of searchedAssets$ | async ">
-                <td>{{asset.id}}</td>
-                <td><a routerLink="/admin-asset/detail/{{asset.id}}" class="asset-link">
-                        {{asset.assetName}}
-                    </a></td>
-                <td>{{asset.assetCategory}}</td>
-                <td
-                    [class]="{'bg-success':asset.status=='Available','bg-danger':asset.status=='Assigned','bg-secondary':asset.status=='On Repair'}">
-                    {{asset.status}}</td>
-            </tr>
-            <tr *ngFor="let asset of assets">
-                <td>{{asset.id}}</td>
-                <td><a routerLink="/admin-asset/detail/{{asset.id}}" class="asset-link">
-                        {{asset.assetName}}
-                    </a></td>
-                <td>{{asset.assetCategory}}</td>
-                <td
-                    [class]="{'bg-success':asset.status=='Available','bg-danger':asset.status=='Assigned','bg-secondary':asset.status=='On Repair'}">
-                    {{asset.status}}</td>
-            </tr>
-        </tbody>
-    </table>
 </div>
