@@ -8,8 +8,14 @@
         'success':loginForm.get('name').valid&&loginForm.get('name').touched}" type="text" formControlName="name" placeholder="Name" name="nameInput" autocomplete="name">
         </div>
         <div class="formElement">
-            <input [class]="{ 'inputEle':true , 'danger':loginForm.get('pass').invalid&&loginForm.get('pass').touched ,
+            <input #pass [class]="{ 'inputEle':true , 'danger':loginForm.get('pass').invalid&&loginForm.get('pass').touched ,
         'success':loginForm.get('pass').valid&&loginForm.get('pass').touched}" type="password" formControlName="pass" placeholder="Password" autocomplete="current-password">
+        </div>
+        <div *ngIf="showPassFlag" class="formElement pl-2 mt-0">
+            <span style="color: #7a92a9;">{{pass.value}}</span>
+        </div>
+        <div class="formElement pl-2">
+            <input type="checkbox" (input)="changeShowPassFlag()" > show password
         </div>
         <div class="formElement">
             <button class="btnSbmt" type="submit" [disabled]="!loginForm.valid">Login</button>

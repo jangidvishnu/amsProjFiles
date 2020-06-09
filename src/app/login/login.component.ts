@@ -17,6 +17,8 @@ import { AppComponent } from '../app.component';
 })
 export class LoginComponent implements OnInit {
 
+  showPassFlag=false;
+
   loginForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(5)]),
     pass: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -63,5 +65,14 @@ export class LoginComponent implements OnInit {
         }
       }, error => { console.log(error); }
       );
+  }
+
+  changeShowPassFlag(){
+    if(this.showPassFlag==false){
+      this.showPassFlag=true;
+    }
+    else if(this.showPassFlag==true){
+      this.showPassFlag=false;
+    }
   }
 }
