@@ -3,4 +3,5 @@ export interface Employee {
     name: string;
     pass:string;
     assignedAssets : any[];
+    emailid : string;
 }

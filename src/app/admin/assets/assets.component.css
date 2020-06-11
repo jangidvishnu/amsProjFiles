@@ -1,5 +1,10 @@
 /*----------- Add Employee Button and Search Bar ------------- */
 
+.btn-primary {
+    background-color: #40bad5;
+    border-color: #40bad5;
+}
+
 .button-grp {
     display: flex;
     flex-direction: row-reverse;
@@ -16,7 +21,7 @@
 
 /* -------------Assets List -----------------------*/
 
-.table{
+.table {
     margin: 0px;
 }
 
@@ -34,7 +39,7 @@
 }
 
 .heading {
-    background-color: #007bff;
+    background-color: #bbbbbb;
     position: sticky;
     top: 0px;
     text-align: center;
@@ -48,11 +53,24 @@
     text-decoration-line: none;
 }
 
+.bg-danger {
+    background-color: #e84a5f!important;
+}
+
+.bg-success {
+    background-color: #21bf73!important;
+}
+
 /* ----------Add Employee Modal ------------ */
 
 .form-control {
     padding-right: 2px;
     padding-left: 8px;
+}
+
+.form-info {
+    font-size: x-small;
+    color: orange;
 }
 
 /* ---------------- Media Queries ----------- */

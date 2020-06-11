@@ -6,7 +6,10 @@
     flex-direction: row-reverse;
     margin: 0px 5vw;
 }
-
+.btn-primary {
+    background-color: #40bad5;
+    border-color: #40bad5;
+}
 /* ----------- Asset Table-----------  */
 
 .table{
@@ -17,7 +20,7 @@
     width: 90vw;
     margin: 0px auto;
     position: relative;
-    max-height: 60vh;
+    max-height: 50vh;
     overflow: auto;
 }
 
@@ -27,7 +30,7 @@
 }
 
 .heading {
-    background-color: #007bff;
+    background-color: #bbbbbb;
     position: sticky;
     top: 0px;
     text-align: center;
@@ -46,7 +49,7 @@
     margin: 0px;
     margin-top:2vh;
     margin-left: 5vw;
-    background-color: #007bff;
+    background-color: #bbbbbb;
     border-radius: 12px 12px 0px 0px;
     border: 1px solid #dee2e6;
     font-weight: bold;

@@ -11,6 +11,7 @@ import { Mobile } from 'src/app/assetClasses/mobile';
 import { Books } from 'src/app/assetClasses/books';
 import { Laptop } from 'src/app/assetClasses/laptop';
 import { DesktopPC } from 'src/app/assetClasses/desktop-pc';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-single-employee',
@@ -33,12 +34,11 @@ export class SingleEmployeeComponent implements OnInit {
   )
 
   constructor(private route: ActivatedRoute, private employeeService: EmployeeService,
-    private loginService: LoginService, private router: Router, private assetService: AssetService) {
-    if (this.loginService.ifLoggedIn('admin')) {
-      // nothing to do
-    }
-    else {
-      alert('You are not logged In! Log In first');
+    private loginService: LoginService, private router: Router,
+    private assetService: AssetService, private toastr: ToastrService) {
+
+    if (!this.loginService.ifLoggedIn('admin')) {
+      this.toastr.warning("You are not logged in ! Please login and try", "", { closeButton: true });
       this.router.navigate(['']);
     }
     this.id = +this.route.snapshot.paramMap.get('id');
@@ -51,6 +51,7 @@ export class SingleEmployeeComponent implements OnInit {
         this.assetList = emp.assignedAssets;
       }
     );
+
     this.searchedAssets$ = this.searchTerms.pipe(
       debounceTime(300),
 
@@ -58,6 +59,7 @@ export class SingleEmployeeComponent implements OnInit {
 
       switchMap((term: string) => this.assetService.searchAssetByCategory(term)),
     );
+
   }
 
   search(term: string): void {
@@ -65,12 +67,11 @@ export class SingleEmployeeComponent implements OnInit {
   }
 
   addSelectedAssets(asset: Mobile | Books | Laptop | DesktopPC) {
-
     if (this.selectedAssets == undefined) {
       this.selectedAssets = [asset];
     }
     else if (this.selectedAssets.some(ass => ass.id == asset.id)) {
-      alert('already added');
+      this.toastr.error("Already added", "", { closeButton: true });
     }
     else {
       this.selectedAssets.push(asset);
@@ -78,6 +79,7 @@ export class SingleEmployeeComponent implements OnInit {
   }
 
   assignAsset() {
+
     let subdate = this.assignAssetForm.get('submissionDateInput').value;
     let issdate = new Date();
     for (let asset of this.selectedAssets) {
@@ -91,6 +93,7 @@ export class SingleEmployeeComponent implements OnInit {
     }
     this.assetList = this.employee.assignedAssets;
     this.employeeService.updateEmployee(this.employee).subscribe();
+    this.toastr.success("Assigned Assets Successfully", "", { closeButton: true });
     this.assignAssetForm.setValue({ submissionDateInput: '' });
     this.selectedAssets = [];
     this.search("");
@@ -110,7 +113,7 @@ export class SingleEmployeeComponent implements OnInit {
 
   unassignAsset() {
     if (this.unassignAssetId != undefined) {
-      let updatedAssignedAssets=[];
+      let updatedAssignedAssets = [];
       let assets: any = this.employee.assignedAssets
       for (let asset of assets) {
         if (asset.id == this.unassignAssetId) {
@@ -121,35 +124,35 @@ export class SingleEmployeeComponent implements OnInit {
           delete asset.issuedEmployeeId;
           this.assetService.updateAsset(asset).subscribe();
         }
-        else{
+        else {
           updatedAssignedAssets.push(asset);
         }
       }
-      this.employee.assignedAssets=updatedAssignedAssets;
-      this.assetList=updatedAssignedAssets;
+      this.employee.assignedAssets = updatedAssignedAssets;
+      this.assetList = updatedAssignedAssets;
       this.employeeService.updateEmployee(this.employee).subscribe();
-      
+      this.toastr.success("Asset Un-Assigned", "", { closeButton: true });
     }
   }
-  
+
   deleteEmployee() {
-      this.employeeService.getEmployeeById(this.employee.id).
+    this.employeeService.getEmployeeById(this.employee.id).
       subscribe(
-        (emp) =>
-        {
-         let assets:any=emp.assignedAssets;
-         for (let asset of assets){
-           asset.status="Available";
-           delete asset.issuedEmployeeName;
-           delete asset.submissionDate;
-           delete asset.issueDate;
-           delete asset.issuedEmployeeId;
-           this.assetService.updateAsset(asset).subscribe();
-         }
+        (emp) => {
+          let assets: any = emp.assignedAssets;
+          for (let asset of assets) {
+            asset.status = "Available";
+            delete asset.issuedEmployeeName;
+            delete asset.submissionDate;
+            delete asset.issueDate;
+            delete asset.issuedEmployeeId;
+            this.assetService.updateAsset(asset).subscribe();
+          }
         }
       );
-      this.employeeService.deleteEmployee(this.employee.id)
-        .subscribe();
-      this.router.navigateByUrl('/admin/(adminR:employees-detail)');
+    this.employeeService.deleteEmployee(this.employee.id)
+      .subscribe();
+    this.toastr.success("Employee deleted", "", { closeButton: true });
+    this.router.navigateByUrl('/admin/(adminR:employees-detail)');
   }
 }

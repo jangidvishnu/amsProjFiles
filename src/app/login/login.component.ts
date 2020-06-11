@@ -3,12 +3,10 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { EmployeeService } from '../employee.service'
 import { AdminService } from '../admin.service';
-import { Admin } from '../admin';
-import { Employee } from '../employee';
 import { Router } from '@angular/router';
-import { error } from 'protractor';
 import { LoginService } from '../login.service';
 import { AppComponent } from '../app.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -17,46 +15,48 @@ import { AppComponent } from '../app.component';
 })
 export class LoginComponent implements OnInit {
 
-  showPassFlag=false;
+  showPassFlag = false;
 
   loginForm = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(5)]),
-    pass: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    emailId: new FormControl('', [Validators.required, Validators.email,Validators.pattern('[A-Za-z0-9_]+@[A-Za-z]+[\.][A-Za-z]+')]),
+    pass: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z0-9@]+')]),
   });
 
   constructor(private employeeService: EmployeeService, private adminService: AdminService,
-    private router: Router, private loginService: LoginService) {
+    private router: Router, private loginService: LoginService, private toastr: ToastrService) {
     if (this.loginService.ifSomebodyLoggedIn()) {
+      this.toastr.info("Logout for go to login page","",{closeButton:true});
       this.router.navigate([this.loginService.getLoggedInRoute()]);
     }
   }
 
   ngOnInit(): void {
   }
+
   onSubmit() {
-    let name: string = this.loginForm.get('name').value;
+    let email: string = this.loginForm.get('emailId').value;
     let pass: string = this.loginForm.get('pass').value;
-    name = name.trim();
+    email = email.trim();
     pass = pass.trim();
-    this.loginForm.setValue({ 'name': "", 'pass': "" });
-    this.isAdmin(name, pass);
-    this.isEmployee(name, pass);
+    this.loginForm.setValue({ 'emailId': "", 'pass': "" });
+    this.isAdmin(email, pass);
+    this.isEmployee(email, pass);
   }
-  private isAdmin(name: string, pass: string) {
-    this.adminService.getAdmin(name, pass)
+  
+  private isAdmin(email: string, pass: string) {
+    this.adminService.getAdmin(email, pass)
       .subscribe(adm => {
         if (adm[0] != undefined) {
           this.loginService.login('admin');
           AppComponent.setLoginStatus();
           this.router.navigate(['admin']);
         }
-
       }, error => { console.log(error); }
       );
   }
 
-  private isEmployee(name: string, pass: string) {
-    this.employeeService.getEmployee(name, pass)
+  private isEmployee(email: string, pass: string) {
+    this.employeeService.getEmployee(email, pass)
       .subscribe(emp => {
         if (emp[0] != undefined) {
           this.loginService.login('employeeid' + emp[0].id);
@@ -67,12 +67,12 @@ export class LoginComponent implements OnInit {
       );
   }
 
-  changeShowPassFlag(){
-    if(this.showPassFlag==false){
-      this.showPassFlag=true;
+  changeShowPassFlag() {
+    if (this.showPassFlag == false) {
+      this.showPassFlag = true;
     }
-    else if(this.showPassFlag==true){
-      this.showPassFlag=false;
+    else if (this.showPassFlag == true) {
+      this.showPassFlag = false;
     }
   }
 }

@@ -1,7 +1,7 @@
 <!--  ---------- Add Asset Button and  Search Bar   ------------   -->
 
 <div class="button-grp">
-    <button type="button" class="btn btn-primary add-asset-btn" (click)="resetAddedSuccessMessage()" data-toggle="modal" data-target="#addAssetModal">Add
+    <button type="button" class="btn btn-primary add-asset-btn" data-toggle="modal" data-target="#addAssetModal">Add
         Asset</button>
     <div id="search-component">
         <div class="input-group input-group-sm ">
@@ -72,6 +72,11 @@
                         <input type="text" id="assetUnId" class="form-control" formControlName="unid">
                     </div>
                     <div class="form-group">
+                        <label for="assetBuyDt" class="col-form-label">Asset Buy Date:</label>
+                        <input type="date" id="assetBuyDt" class="form-control" [max]="getTodayDate()"
+                            formControlName="buyDate">
+                    </div>
+                    <div class="form-group">
                         <label for="assetCategory" class="col-form-label">Asset Category:</label>
                         <select name="assetCategory" id="assetCategory" formControlName="category">
                             <option value="mobile">Mobile</option>
@@ -80,15 +85,15 @@
                             <option value="book">Book</option>
                         </select>
                     </div>
+                    <hr>
+                    <h6 class="form-info">* All three fields are required</h6>
+                    <h6 class="form-info">* UniqueID must not contain whitespaces</h6>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" id="sbmtBtn" class="btn btn-primary" [disabled]="!addAssetForm.valid">Add
                             Asset</button>
                     </div>
                 </form>
-                <div *ngIf="addedSuccessMessage" class="alert alert-success" role="alert">
-                    {{addedSuccessMessage}}
-                </div>
             </div>
         </div>
     </div>

@@ -6,6 +6,7 @@ import { EmployeesDetailComponent } from './employees-detail/employees-detail.co
 import { SingleEmployeeComponent } from './single-employee/single-employee.component';
 import { SingleAssetComponent } from './single-asset/single-asset.component';
 import { RequestsComponent } from './requests/requests.component';
+import { AssetHistoryComponent } from './asset-history/asset-history.component';
 
 
 const adminRoutes: Routes = [
@@ -21,7 +22,8 @@ const adminRoutes: Routes = [
     ]
   },
   { path:'admin-emp/detail/:id',component:SingleEmployeeComponent },
-  { path:'admin-asset/detail/:id',component:SingleAssetComponent}
+  { path:'admin-asset/detail/:id',component:SingleAssetComponent},
+  { path:'admin-asset/asset-history/:id',component:AssetHistoryComponent},
 ];
 
 @NgModule({

@@ -1,21 +1,22 @@
 
 <!--------------- Employee Info------------------ -->
 
-<div class="info-div">
+<div class="info-div mb-0">
     <h1 class="info-line"><span class="name-label">Employee Id : </span><span
             class="label-value">{{employee?.id}}</span></h1>
     <h1 class="info-line float-right"><span class="name-label">Employee Name : </span><span
             class="label-value">{{employee?.name}}</span></h1>
 </div>
-
-
-
+<div class="info-div mt-0">
+        <h1 class="info-line float-left"><span class="name-label">Employee Email : </span><span
+                class="label-value">{{employee?.emailid}}</span></h1>
+</div>
+<hr class="separator-line">
 <!-- Router Links -->
 <div class="router-div">
 <a [routerLink]="[{outlets: {employeeR: 'dashboard'}}]" class="btn router-link" routerLinkActive="active">Dashboard</a>
 <a [routerLink]="[ {outlets: {employeeR: 'reqHist'}}]" class="btn router-link" routerLinkActive="active">Request History</a>
 </div>
-<hr class="separator-line">
 
 <!-- Router Outlet -->
 

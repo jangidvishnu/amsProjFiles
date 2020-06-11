@@ -11,9 +11,11 @@ export class Mobile implements AssetInterface {
     issueDate: Date;
     submissionDate: Date;
     issuedEmployeeName: string;
+    buyDate : Date;
 
-    constructor(assetName: string, assetUniqueId: string) {
+    constructor(assetName: string, assetUniqueId: string , buyDate :Date) {
         this.assetName = assetName;
         this.assetUniqueId = assetUniqueId;
+        this.buyDate=buyDate;
     }
 }

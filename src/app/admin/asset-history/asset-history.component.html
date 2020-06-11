@@ -1,0 +1,23 @@
+<!--------------------- Request Table ---------------------->
+<div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-bordered table-responsive-sm">
+        <thead class="bg-primary">
+            <tr>
+                <th scope="col" class="heading">#</th>
+                <th scope="col" class="heading">Asset Name</th>
+                <th scope="col" class="heading">Activity</th>
+                <th scope="col" class="heading">Related Employee</th>
+                <th scope="col" class="heading">Activity Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let hist of assetHistory; index as ind">
+                <td style="font-weight: bold;">{{ind+1}}</td>
+                <td style="font-weight: bold;">{{hist?.assetName}}</td>
+                <td>{{hist?.activity}}</td>
+                <td>{{hist?.relatedEmployeeName || "N/A"}}</td> 
+                <td>{{hist?.activityDate | date:'medium'}}</td> 
+            </tr>
+        </tbody>
+    </table>
+</div>

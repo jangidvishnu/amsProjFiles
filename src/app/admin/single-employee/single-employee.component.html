@@ -1,9 +1,13 @@
 <!--------------- Employee Info------------------ -->
-<div class="info-div">
+<div class="info-div mb-0">
     <h1 class="info-line"><span class="name-label">Employee Id : </span><span
             class="label-value">{{employee?.id}}</span></h1>
     <h1 class="info-line float-right"><span class="name-label">Employee Name : </span><span
             class="label-value">{{employee?.name}}</span></h1>
+</div>
+<div class="info-div mt-0">
+    <h1 class="info-line float-left"><span class="name-label">Employee Email : </span><span
+        class="label-value">{{employee?.emailid}}</span></h1>
 </div>
 
 <hr class="separator-line">
@@ -17,7 +21,6 @@
     <button type="button" class="btn btn-danger assign-asset-btn" data-toggle="modal"
         data-target="#removeEmpBackdrop">Delete
         Employee</button>
-
 </div>
 
 <!--------------------- Asset Table ---------------------->

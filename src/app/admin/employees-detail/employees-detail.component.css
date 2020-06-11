@@ -1,5 +1,10 @@
 /*----------- Add Employee Button and Search Bar ------------- */
 
+.btn-primary {
+    background-color: #40bad5;
+    border-color: #40bad5;
+}
+
 .button-grp {
     display: flex;
     flex-direction: row-reverse;
@@ -16,7 +21,7 @@
 
 /* ----------- Employees Table----------- */
 
-.table{
+.table {
     margin: 0px;
 }
 
@@ -34,13 +39,13 @@
 }
 
 .heading {
-    background-color:#007bff ;
+    background-color: #bbbbbb;
     position: sticky;
     top: 0px;
     text-align: center;
 }
 
-.table td{
+.table td {
     text-align: center;
 }
 
@@ -53,6 +58,11 @@
 .form-control {
     padding-right: 2px;
     padding-left: 8px;
+}
+
+.form-info {
+    font-size: x-small;
+    color: orange;
 }
 
 /* -------Media Queries------------------ */

@@ -10,6 +10,7 @@
     position: relative;
     max-height: 60vh;
     overflow: auto;
+    margin-top: 10px;
 }
 
 .table-wrapper-scroll-y {
@@ -18,7 +19,7 @@
 }
 
 .heading {
-    background-color: #007bff;
+    background-color: #bbbbbb;
     position: sticky;
     top: 0px;
     text-align: center;
@@ -32,3 +33,10 @@
     text-decoration: none;
 }
 
+.bg-danger {
+    background-color: #e84a5f!important;
+}
+
+.bg-success {
+    background-color: #21bf73!important;
+}

@@ -12,6 +12,7 @@ import { EmployeeService } from 'src/app/employee.service';
 import { AssetService } from 'src/app/asset.service';
 import { RequestAssetService } from 'src/app/request-asset.service';
 import { RequestAsset } from 'src/app/request-asset';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,20 +27,20 @@ export class DashboardComponent implements OnInit {
   selectedAsset: Mobile | Books | DesktopPC | Laptop;
   searchedAssets$: Observable<any>;
   private searchTerms = new Subject<string>();
-  requestSuccessMessage:string;
 
   requestAssetForm = new FormGroup({
     submissionDateInput: new FormControl("", [Validators.required])
   }
   )
 
-  constructor(private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute, private toastr: ToastrService,
     private employeeService: EmployeeService, private router: Router,
     private assetService: AssetService, private requestAssetService: RequestAssetService) {
-      this.id = +this.route.parent.snapshot.paramMap.get('id');
+    this.id = +this.route.parent.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
+
     this.getEmployee();
     this.searchedAssets$ = this.searchTerms.pipe(
       debounceTime(300),
@@ -72,7 +73,7 @@ export class DashboardComponent implements OnInit {
       this.selectedAsset = asset;
     }
     else if (this.selectedAsset) {
-      alert('You can request for only one Asset at a time');
+      this.toastr.error("You can request for one asset at a time","",{closeButton:true});
     }
   }
 
@@ -84,13 +85,9 @@ export class DashboardComponent implements OnInit {
       requestStatus: 'Pending'
     } as RequestAsset).subscribe(
     );
-    this.requestSuccessMessage="Request Sent Successfully";
+    this.toastr.success("Sent Request Successfully","",{closeButton:true});
     this.selectedAsset = undefined;
     this.requestAssetForm.setValue({ submissionDateInput: '' });
     this.search('');
-  }
-
-  resetRequestSuccessMessage(){
-    this.requestSuccessMessage=undefined;
   }
 }

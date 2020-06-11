@@ -4,17 +4,17 @@
             <h1 style="text-align: center;">Login</h1>
         </div>
         <div class="formElement">
-            <input [class]="{'inputEle':true , 'danger':loginForm.get('name').invalid&&loginForm.get('name').touched ,
-        'success':loginForm.get('name').valid&&loginForm.get('name').touched}" type="text" formControlName="name" placeholder="Name" name="nameInput" autocomplete="name">
+            <input [class]="{'inputEle':true , 'danger':loginForm.get('emailId').invalid&&loginForm.get('emailId').touched ,
+        'success':loginForm.get('emailId').valid&&loginForm.get('emailId').touched}" type="text" formControlName="emailId" placeholder="Email" name="nameInput" >
         </div>
         <div class="formElement">
             <input #pass [class]="{ 'inputEle':true , 'danger':loginForm.get('pass').invalid&&loginForm.get('pass').touched ,
-        'success':loginForm.get('pass').valid&&loginForm.get('pass').touched}" type="password" formControlName="pass" placeholder="Password" autocomplete="current-password">
+        'success':loginForm.get('pass').valid&&loginForm.get('pass').touched}" type="password" formControlName="pass" placeholder="Password" >
         </div>
         <div *ngIf="showPassFlag" class="formElement pl-2 mt-0">
             <span style="color: #7a92a9;">{{pass.value}}</span>
         </div>
-        <div class="formElement pl-2">
+        <div class="formElement ">
             <input type="checkbox" (input)="changeShowPassFlag()" > show password
         </div>
         <div class="formElement">

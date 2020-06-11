@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { throwError, Observable, of } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 import { catchError, filter } from 'rxjs/operators';
 import { RequestAsset } from './request-asset';
 
@@ -16,6 +16,20 @@ export class RequestAssetService {
   private errorHandler(error: HttpErrorResponse) {
     return throwError(
       `${error.message}` || 'server Error'
+    );
+  }
+
+  makeRequest(request: RequestAsset): Observable<RequestAsset> {
+    return this.http.post<RequestAsset>(this.requestUrl, request)
+      .pipe(
+        catchError(this.errorHandler)
+      )
+  }
+
+  getRequestById(reqId: number): Observable<RequestAsset> {
+    const url = `${this.requestUrl}/${reqId}`
+    return this.http.get<RequestAsset>(url).pipe(
+      catchError(this.errorHandler)
     );
   }
 
@@ -45,20 +59,6 @@ export class RequestAssetService {
         ),
         catchError(this.errorHandler)
       );
-  }
-
-  makeRequest(request: RequestAsset): Observable<RequestAsset> {
-    return this.http.post<RequestAsset>(this.requestUrl, request)
-      .pipe(
-        catchError(this.errorHandler)
-      )
-  }
-
-  getRequestById(reqId: number): Observable<RequestAsset> {
-    const url = `${this.requestUrl}/${reqId}`
-    return this.http.get<RequestAsset>(url).pipe(
-      catchError(this.errorHandler)
-    );
   }
 
   updateRequest(request: RequestAsset): Observable<RequestAsset> {

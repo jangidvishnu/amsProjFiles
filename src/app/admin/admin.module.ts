@@ -8,6 +8,7 @@ import { AssetsComponent } from './assets/assets.component';
 import { SingleEmployeeComponent } from './single-employee/single-employee.component';
 import { SingleAssetComponent } from './single-asset/single-asset.component';
 import { RequestsComponent } from './requests/requests.component';
+import { AssetHistoryComponent } from './asset-history/asset-history.component';
 
 
 
@@ -18,7 +19,8 @@ import { RequestsComponent } from './requests/requests.component';
     AssetsComponent,
     SingleEmployeeComponent,
     SingleAssetComponent,
-    RequestsComponent],
+    RequestsComponent,
+    AssetHistoryComponent],
   imports: [
     CommonModule,
     FormsModule,

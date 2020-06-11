@@ -1,0 +1,26 @@
+.body {
+    font-family: 'Piedra', cursive;
+}
+
+.div-center {
+    width: 50vw;
+    margin: 25vh auto;
+    margin-bottom: 0px;
+}
+
+.div-center h1 {
+    text-align: center;
+    font-family: 'Piedra', cursive;
+    font-size: 4rem;
+    background-image: linear-gradient(to left, #654062, #ff9c71, #fbd46d, #32e0c4, #e8ead3, #f3c623, #3797a4);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+@media (max-width:800px) {
+    .div-center h1 {
+        font-size: 3rem;
+    }
+}

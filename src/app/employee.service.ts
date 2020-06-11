@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Employee } from './employee'
 import { Observable, of, throwError } from 'rxjs'
-import { catchError, map, tap, filter, elementAt } from 'rxjs/operators';
+import { catchError, filter } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
+import { LoginService } from './login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,7 @@ import { catchError, map, tap, filter, elementAt } from 'rxjs/operators';
 export class EmployeeService {
 
   constructor(
-    private http: HttpClient,
+    private http: HttpClient, private toastr: ToastrService,private loginService:LoginService
   ) { }
 
   private employeesUrl = 'api/employees';
@@ -20,9 +22,32 @@ export class EmployeeService {
       `${error.message}` || 'server Error'
     );
   }
+
   getEmployees(): Observable<Employee[]> {
     return this.http.get<Employee[]>(this.employeesUrl)
       .pipe(
+        catchError(this.errorHandler)
+      );
+  }
+
+  getEmployeeById(id: number): Observable<Employee> {
+    const url = `${this.employeesUrl}/${id}`
+    return this.http.get<Employee>(url)
+      .pipe(
+        catchError(this.errorHandler)
+      );
+  }
+  getEmployee(email: string, pass: string): Observable<Employee[]> {
+    let emailUpdated: string = email.split('@')[0];
+    let url = this.employeesUrl + `?emailid=` + emailUpdated + `&pass=` + pass;
+    return this.http.get<Employee[]>(url)
+      .pipe(
+        filter((resultEmp) => {
+          if (!this.loginService.ifSomebodyLoggedIn()&&(resultEmp == []|| resultEmp[0]?.emailid != email || resultEmp[0]?.pass != pass)) {
+            this.toastr.error("Wrong Credentials","Login Error",{closeButton:true});
+          }
+          return (resultEmp[0]?.emailid == email) && (resultEmp[0]?.pass == pass)
+        }),
         catchError(this.errorHandler)
       );
   }
@@ -33,6 +58,7 @@ export class EmployeeService {
         catchError(this.errorHandler)
       );
   }
+
   deleteEmployee(id: number): Observable<{}> {
     const url = `${this.employeesUrl}/${id}`
     return this.http.delete(url)
@@ -40,23 +66,7 @@ export class EmployeeService {
         catchError(this.errorHandler)
       );
   }
-  getEmployeeById(id: number): Observable<Employee> {
-    const url = `${this.employeesUrl}/${id}`
-    return this.http.get<Employee>(url)
-      .pipe(
-        catchError(this.errorHandler)
-      );
-  }
-  getEmployee(name: string, pass: string): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.employeesUrl, {
-      params: new HttpParams({ fromString: `name=${name}&pass=${pass}` })
-    })
-      .pipe(
-        filter( (resultEmp) =>{
-          return(resultEmp[0]?.name == name) && (resultEmp[0]?.pass == pass)}),
-        catchError(this.errorHandler)
-      );
-  }
+
 
   searchEmployees(term: string): Observable<Employee[]> {
     if (!term.trim()) {
@@ -68,10 +78,10 @@ export class EmployeeService {
     );
   }
 
-  updateEmployee(employee:Employee):Observable<Employee>{
-    return this.http.put<Employee>(this.employeesUrl,employee).
-    pipe(
-      catchError(this.errorHandler)
-    );
+  updateEmployee(employee: Employee): Observable<Employee> {
+    return this.http.put<Employee>(this.employeesUrl, employee).
+      pipe(
+        catchError(this.errorHandler)
+      );
   }
 }

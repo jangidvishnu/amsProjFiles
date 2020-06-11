@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { LoginService } from './login.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,23 +9,28 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent {
 
-  static loginStatus:string;
+  static loginStatus: string;
+  title = 'AMS';
 
   constructor(private router: Router, private loginService: LoginService) { }
-  title = 'AMS';
-  ngOnInit(){
-    AppComponent.loginStatus="loggedout";
+
+
+  ngOnInit() {
+    AppComponent.loginStatus = "loggedout";
   }
 
-  logout(){
+  logout() {
     this.loginService.logout();
-    AppComponent.loginStatus="loggedout";
+    AppComponent.loginStatus = "loggedout";
     this.router.navigate(['']);
   }
-  static setLoginStatus(){
-    AppComponent.loginStatus="loggedin";
-  }
-  getLoginStatus(){
+
+  getLoginStatus() {
     return AppComponent.loginStatus;
   }
+
+  static setLoginStatus() {
+    AppComponent.loginStatus = "loggedin";
+  }
+
 }

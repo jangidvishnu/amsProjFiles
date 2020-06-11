@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Admin } from './admin'
-import { Observable, of, throwError } from 'rxjs'
-import { catchError, map, tap, filter, retry } from 'rxjs/operators';
-import { get } from 'http';
+import { Observable,  throwError } from 'rxjs'
+import { catchError ,filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,13 +19,14 @@ export class AdminService {
     );
   }
 
-  getAdmin(name: string, pass: string): Observable<Admin> {
-    return this.http.get<Admin>(this.adminUrl, {
-      params: new HttpParams({fromString:`name=${name}&pass=${pass}`})
-    })
+  getAdmin(email: string, pass: string): Observable<Admin> {
+    let emailUpdated :string= email.split('@')[0];
+    let url = this.adminUrl+`?emailid=`+emailUpdated+`&pass=`+pass;
+    return this.http.get<Admin>(url)
       .pipe(
-        filter( resultAdmin => (resultAdmin[0]?.name==name)&&(resultAdmin[0]?.pass==pass)  ),
+        filter( resultAdmin =>{
+          return (resultAdmin[0]?.emailid==email)&&(resultAdmin[0]?.pass==pass)} ),
         catchError(this.errorHandler)
-      );
+      ); 
   }
 }
