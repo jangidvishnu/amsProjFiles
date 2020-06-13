@@ -5,19 +5,20 @@
             <tr>
                 <th scope="col" class="heading">#</th>
                 <th scope="col" class="heading">Request ID</th>
+                <th scope="col" class="heading">Request Date</th>
                 <th scope="col" class="heading">Asset Name</th>
                 <th scope="col" class="heading">Requested Submission Date</th>
                 <th scope="col" class="heading">Status</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let request of requests; index as ind">
+            <tr *ngFor="let request of requests; index as ind; trackBy:trackById">
                 <td style="font-weight: bold;">{{ind+1}}</td>
                 <td style="font-weight: bold;">{{request?.id}}</td>
+                <td>{{request?.requestDate | date:'medium'}}</td>
                 <td>{{request?.requestedAssetName}}</td>
-                <td>{{request?.submissionDate}}</td>
-                <td
-                    [class]="{'bg-success':request?.requestStatus=='Accepted',
+                <td>{{request?.submissionDate | date:'mediumDate'}}</td>
+                <td [class]="{'bg-success':request?.requestStatus=='Accepted',
                     'bg-danger':request?.requestStatus=='Rejected',
                     'bg-info':request?.requestStatus=='Pending'}">
                     {{request?.requestStatus}}</td>

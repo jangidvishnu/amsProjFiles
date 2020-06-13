@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
-import { catchError, filter } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { RequestAsset } from './request-asset';
 
 @Injectable({
@@ -44,19 +44,13 @@ export class RequestAssetService {
   }
 
   getRequestsOfEmp(id: number): Observable<RequestAsset[]> {
-    return this.http.get<RequestAsset[]>(this.requestUrl,
-      {
-        params: new HttpParams({
-          fromString: 'requestEmployeeId=' + id
-        })
-      }
-    )
+   
+    return this.http.get<RequestAsset[]>(this.requestUrl)
       .pipe(
-        filter(
-          (reqs) => {
-            return reqs[0]?.requestEmployeeId == id;
-          }
-        ),
+        map(result =>
+          result.filter(
+            req => req.requestEmployeeId==id
+          )  ),
         catchError(this.errorHandler)
       );
   }

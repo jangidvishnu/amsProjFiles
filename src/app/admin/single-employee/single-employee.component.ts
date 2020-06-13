@@ -4,7 +4,7 @@ import { EmployeeService } from 'src/app/employee.service';
 import { Employee } from 'src/app/employee';
 import { LoginService } from 'src/app/login.service';
 import { Subject, Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, catchError } from 'rxjs/operators';
 import { AssetService } from 'src/app/asset.service';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Mobile } from 'src/app/assetClasses/mobile';
@@ -12,6 +12,8 @@ import { Books } from 'src/app/assetClasses/books';
 import { Laptop } from 'src/app/assetClasses/laptop';
 import { DesktopPC } from 'src/app/assetClasses/desktop-pc';
 import { ToastrService } from 'ngx-toastr';
+import { AssetHistoryService } from 'src/app/asset-history.service';
+import { AssetHistory } from 'src/app/asset-history';
 
 @Component({
   selector: 'app-single-employee',
@@ -35,7 +37,8 @@ export class SingleEmployeeComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private employeeService: EmployeeService,
     private loginService: LoginService, private router: Router,
-    private assetService: AssetService, private toastr: ToastrService) {
+    private assetService: AssetService, private toastr: ToastrService,
+    private assetHistoryService: AssetHistoryService) {
 
     if (!this.loginService.ifLoggedIn('admin')) {
       this.toastr.warning("You are not logged in ! Please login and try", "", { closeButton: true });
@@ -45,21 +48,28 @@ export class SingleEmployeeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.employeeService.getEmployeeById(this.id).subscribe(
-      (emp) => {
-        this.employee = emp;
-        this.assetList = emp.assignedAssets;
-      }
-    );
-
+    this.getEmployee();
     this.searchedAssets$ = this.searchTerms.pipe(
       debounceTime(300),
 
       distinctUntilChanged(),
 
-      switchMap((term: string) => this.assetService.searchAssetByCategory(term)),
+      switchMap((term: string) => this.assetService.searchAvailableAsset(term)),
     );
 
+  }
+
+  private getEmployee() {
+    this.employeeService.getEmployeeById(this.id).subscribe(
+      (emp) => {
+        this.employee = emp;
+        emp.assignedAssets.reverse();
+        this.assetList = emp.assignedAssets;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   search(term: string): void {
@@ -85,14 +95,21 @@ export class SingleEmployeeComponent implements OnInit {
     for (let asset of this.selectedAssets) {
       asset.issueDate = issdate;
       asset.submissionDate = new Date(subdate);
+      asset.submissionDate.setMinutes(asset.submissionDate.getMinutes()+390);
       asset.issuedEmployeeName = this.employee.name;
       asset.issuedEmployeeId = this.employee.id;
       asset.status = "Assigned";
       this.assetService.updateAsset(asset).subscribe();
       this.employee.assignedAssets.push(asset);
+      this.assetHistoryService.addAssetHistory({
+        assetId: asset.id, assetName: asset.assetName, relatedEmployeeId: this.employee.id,
+        relatedEmployeeName: this.employee.name,
+        activityDate: issdate, activity: 'Assigned'
+      } as AssetHistory).subscribe();
     }
     this.assetList = this.employee.assignedAssets;
     this.employeeService.updateEmployee(this.employee).subscribe();
+    this.getEmployee();
     this.toastr.success("Assigned Assets Successfully", "", { closeButton: true });
     this.assignAssetForm.setValue({ submissionDateInput: '' });
     this.selectedAssets = [];
@@ -123,6 +140,11 @@ export class SingleEmployeeComponent implements OnInit {
           delete asset.issueDate;
           delete asset.issuedEmployeeId;
           this.assetService.updateAsset(asset).subscribe();
+          this.assetHistoryService.addAssetHistory({
+            assetId: asset.id, assetName: asset.assetName, relatedEmployeeId: this.employee.id,
+            relatedEmployeeName: this.employee.name,
+            activityDate: new Date(), activity: 'Un-Assigned'
+          } as AssetHistory).subscribe();
         }
         else {
           updatedAssignedAssets.push(asset);
@@ -147,6 +169,11 @@ export class SingleEmployeeComponent implements OnInit {
             delete asset.issueDate;
             delete asset.issuedEmployeeId;
             this.assetService.updateAsset(asset).subscribe();
+            this.assetHistoryService.addAssetHistory({
+              assetId: asset.id, assetName: asset.assetName, relatedEmployeeId: this.employee.id,
+              relatedEmployeeName: this.employee.name,
+              activityDate: new Date(), activity: 'Un-Assigned (employee fired)'
+            } as AssetHistory).subscribe();
           }
         }
       );
@@ -155,4 +182,24 @@ export class SingleEmployeeComponent implements OnInit {
     this.toastr.success("Employee deleted", "", { closeButton: true });
     this.router.navigateByUrl('/admin/(adminR:employees-detail)');
   }
+
+  trackById(index: number, asset: Mobile | Books | Laptop | DesktopPC):number {
+    return asset?.id
+  }
+
+  getTodayDate(): string {
+    var d = new Date();
+    d.setDate(d.getDate() + 1);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    let year = d.getFullYear();
+
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
 }

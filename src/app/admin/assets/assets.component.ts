@@ -8,7 +8,8 @@ import { Laptop } from 'src/app/assetClasses/laptop';
 import { DesktopPC } from 'src/app/assetClasses/desktop-pc';
 import { Books } from 'src/app/assetClasses/books';
 import { ToastrService } from 'ngx-toastr';
-import { CommentStmt } from '@angular/compiler';
+import { AssetHistoryService } from 'src/app/asset-history.service';
+import { AssetHistory } from 'src/app/asset-history';
 
 
 @Component({
@@ -31,7 +32,8 @@ export class AssetsComponent implements OnInit {
     }
   );
 
-  constructor(private assetService: AssetService, private toastr: ToastrService) { }
+  constructor(private assetService: AssetService, private toastr: ToastrService,
+    private assetHistoryService: AssetHistoryService) { }
 
   ngOnInit(): void {
 
@@ -61,32 +63,55 @@ export class AssetsComponent implements OnInit {
     if (category == 'laptop') {
       let laptopObj = new Laptop(name, unid, buyDate);
       this.assetService.addAsset(laptopObj)
-        .subscribe(assetAdded => this.assets.push(assetAdded));
+        .subscribe((assetAdded) => {
+          this.assets.push(assetAdded);
+          this.assetHistoryService.addAssetHistory({ assetId: assetAdded.id, assetName: name, activity: "Added", activityDate: new Date() } as AssetHistory).subscribe(
+
+          );
+        });
     }
     else if (category == 'desktoppc') {
       let desktoppcObj = new DesktopPC(name, unid, buyDate);
       this.assetService.addAsset(desktoppcObj)
-        .subscribe(assetAdded => this.assets.push(assetAdded));
+        .subscribe((assetAdded) => {
+          this.assets.push(assetAdded);
+          this.assetHistoryService.addAssetHistory({ assetId: assetAdded.id, assetName: name, activity: "Added", activityDate: new Date() } as AssetHistory).subscribe(
+
+          );
+        });
 
     }
     else if (category == 'book') {
       let bookObj = new Books(name, unid, buyDate);
       this.assetService.addAsset(bookObj)
-        .subscribe(assetAdded => this.assets.push(assetAdded));
+        .subscribe((assetAdded) => {
+          this.assets.push(assetAdded);
+          this.assetHistoryService.addAssetHistory({ assetId: assetAdded.id, assetName: name, activity: "Added", activityDate: new Date() } as AssetHistory).subscribe(
+
+          );
+        });
 
     }
     else if (category == 'mobile') {
       let mobileObj = new Mobile(name, unid, buyDate);
       this.assetService.addAsset(mobileObj)
-        .subscribe(assetAdded => this.assets.push(assetAdded));
+        .subscribe((assetAdded) => {
+          this.assets.push(assetAdded);
+          this.assetHistoryService.addAssetHistory({ assetId: assetAdded.id, assetName: name, activity: "Added", activityDate: new Date() } as AssetHistory).subscribe(
+          );
+        });
     }
     this.toastr.success("Asset Successfully Created", '', { closeButton: true });
     this.addAssetForm.setValue({ name: "", unid: "", category: "", buyDate: "" });
     this.getAssets();
-  }
 
+  }
   search(term: string): void {
     this.searchTerms.next(term);
+  }
+
+  trackById(index:number,asset:Mobile|Books|Laptop|DesktopPC):number{
+    return asset?.id;
   }
 
   getTodayDate(): string {
@@ -99,7 +124,7 @@ export class AssetsComponent implements OnInit {
       month = '0' + month;
     if (day.length < 2)
       day = '0' + day;
-      
+
     return [year, month, day].join('-');
   }
 

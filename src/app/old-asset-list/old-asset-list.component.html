@@ -1,0 +1,45 @@
+<!--------------- Search Bar -------------->
+<div id="search-component">
+    <div class="input-group input-group-sm ">
+        <input type="text" #searchBox id="search-box" aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-sm" class="form-control" placeholder="Search Asset"
+            (input)="search(searchBox.value)" />
+    </div>
+</div>
+
+<!----------------------- Asset List -------------------->
+<div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-bordered table-responsive-sm">
+        <thead class="bg-primary">
+            <tr>
+                <th class="heading" scope="col">Asset ID</th>
+                <th class="heading" scope="col">Asset Name</th>
+                <th class="heading" scope="col">Asset Category</th>
+                <th class="heading" scope="col">Buy Date</th>
+                <th class="heading" scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let asset of searchedAssets$ | async ">
+                <td style="font-weight: bold;">{{asset.id}}</td>
+                <td>{{asset.assetName}}</td>
+                <td>{{asset.assetCategory}}</td>
+                <td>{{asset.buyDate |date:'mediumDate'}}</td>
+                <td
+                    [class]="{'bg-success':asset.status=='Available','bg-danger':asset.status=='Assigned','bg-info':asset.status=='On Repair'}">
+                    {{asset.status}}</td>
+            </tr>
+            <ng-container *ngIf="searchBox.value==''">
+                <tr *ngFor="let asset of assets">
+                    <td style="font-weight: bold;">{{asset.id}}</td>
+                    <td>{{asset.assetName}}</td>
+                    <td>{{asset.assetCategory}}</td>
+                    <td>{{asset.buyDate |date:'mediumDate'}}</td>
+                    <td
+                        [class]="{'bg-success':asset.status=='Available','bg-danger':asset.status=='Assigned','bg-secondary':asset.status=='On Repair'}">
+                        {{asset.status}}</td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>

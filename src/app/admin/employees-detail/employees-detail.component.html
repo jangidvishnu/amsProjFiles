@@ -1,8 +1,7 @@
 <!--  ---------- Add Employee Button and  Search Bar   ------------   -->
 
 <div class="button-grp">
-    <button type="button"  class="btn btn-primary add-emp-btn" data-toggle="modal"
-        data-target="#addEmployeeModal">Add
+    <button type="button" class="btn btn-primary add-emp-btn" data-toggle="modal" data-target="#addEmployeeModal">Add
         Employee</button>
     <div id="search-component">
         <div class="input-group input-group-sm ">
@@ -25,20 +24,22 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let employee of searchedEmployees$ | async ">
+            <tr *ngFor="let employee of searchedEmployees$ | async ; trackBy:trackById">
                 <td style="font-weight: bold;">{{employee.id}}</td>
                 <td><a routerLink="/admin-emp/detail/{{employee.id}}" class="employee-link">
                         {{employee.name}}
                     </a></td>
                 <td>{{employee.assignedAssets.length}}</td>
             </tr>
-            <tr *ngFor="let employee of employees">
-                <td style="font-weight: bold;">{{employee.id}}</td>
-                <td><a routerLink="/admin-emp/detail/{{employee.id}}" class="employee-link">
-                        {{employee.name}}
-                    </a></td>
-                <td>{{employee.assignedAssets.length}}</td>
-            </tr>
+            <ng-container *ngIf="searchBox.value==''" >
+                <tr *ngFor="let employee of employees; trackBy:trackById">
+                    <td style="font-weight: bold;">{{employee.id}}</td>
+                    <td><a routerLink="/admin-emp/detail/{{employee.id}}" class="employee-link">
+                            {{employee.name}}
+                        </a></td>
+                    <td>{{employee.assignedAssets.length}}</td>
+                </tr>
+            </ng-container>
         </tbody>
     </table>
 </div>

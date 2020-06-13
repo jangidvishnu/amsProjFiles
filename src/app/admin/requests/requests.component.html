@@ -6,6 +6,7 @@
             <tr>
                 <th class="heading" scope="col">#</th>
                 <th class="heading" scope="col">Request ID</th>
+                <th class="heading" scope="col">Request Date</th>
                 <th class="heading" scope="col">Asset Name</th>
                 <th class="heading" scope="col">Requested Employee Name</th>
                 <th class="heading" scope="col">Requested Submission Date</th>
@@ -13,14 +14,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let request of requests; index as i">
+            <tr *ngFor="let request of requests; index as i ; trackBy:trackById">
                 <td style="font-weight: bold;">{{i+1}}</td>
                 <td style="font-weight: bold;">{{request?.id}}</td>
+                <td>{{request?.requestDate | date:'medium'}}</td>
                 <td><a routerLink="/admin-asset/detail/{{request.requestedAssetId}}">{{request?.requestedAssetName}}</a>
                 </td>
                 <td><a routerLink="/admin-emp/detail/{{request.requestEmployeeId}}">{{request?.requestEmployeeName}}</a>
                 </td>
-                <td>{{request.submissionDate | date:'medium'}}</td>
+                <td>{{request.submissionDate | date:'mediumDate'}}</td>
                 <td>
                     <button  class="btn btn-sm bg-success" data-toggle="modal"
                         data-target="#acceptRequestBackdrop" (click)="conAcceptRequest(request.id)">Accept</button>

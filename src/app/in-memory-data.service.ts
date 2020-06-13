@@ -21,10 +21,10 @@ export class InMemoryDataService implements InMemoryDbService {
           id: 1, issueDate: "2020-06-03T12:59:14.795Z",
           issuedEmployeeId: 1,
           issuedEmployeeName: "employee1",
-          submissionDate: "Thu Jun 18 2020 05:30:00 GMT+0530 (India Standard Time)", buyDate: "2020-01-01"
+          submissionDate: "Thu Jun 13 2020 12:00:00 GMT+0530 (India Standard Time)", buyDate: "2020-01-01"
         }]
       },
-      { id: 2, name: 'employee2', emailid: 'employee2@gmail.com', pass: 'pass2', assignedAssets: [] },
+      { id: 2, name: 'employee2', emailid: 'employee33@gmail.com', pass: 'pass33', assignedAssets: [] },
       { id: 3, name: 'employee3', emailid: 'employee3@gmail.com', pass: 'pass3', assignedAssets: [] },
       { id: 4, name: 'employee4', emailid: 'employee4@gmail.com', pass: 'pass4', assignedAssets: [] },
       { id: 5, name: 'employee5', emailid: 'employee5@gmail.com', pass: 'pass5', assignedAssets: [] },
@@ -44,12 +44,12 @@ export class InMemoryDataService implements InMemoryDbService {
         id: 1, issueDate: "2020-06-03T12:59:14.795Z",
         issuedEmployeeId: 1,
         issuedEmployeeName: "employee1",
-        submissionDate: "2020-06-18T00:00:00.000Z", buyDate: "2020-01-01"
+        submissionDate: "Thu Jun 13 2020 12:00:00 GMT+0530 (India Standard Time)", buyDate: "2020-01-01"
       },
       { assetCategory: "Mobile", status: "Available", assetName: "Samsung A1", assetUniqueId: "mb1", id: 2, buyDate: "2020-01-01" },
       { assetCategory: "Book", status: "Available", assetName: "Speaking JS", assetUniqueId: "bk1", id: 3, buyDate: "2020-01-01" },
       { assetCategory: "Book", status: "Available", assetName: "Python For Everybody", assetUniqueId: "bk2", id: 4, buyDate: "2020-01-01" },
-      { assetCategory: "Laptop", status: "Available", assetName: "HP Pavillion", assetUniqueId: "lt1", id: 5, buyDate: "2020-01-01" },
+      { assetCategory: "Laptop", status: "Available", assetName: "HP Pavillion", assetUniqueId: "lt1", id: 5, buyDate: "2015-01-01" },
       { assetCategory: "DesktopPC", status: "Available", assetName: "Dell Insp.", assetUniqueId: "dtp1", id: 6, buyDate: "2020-01-01" },
     ];
     const requests = [
@@ -60,27 +60,28 @@ export class InMemoryDataService implements InMemoryDbService {
         requestStatus: "Pending",
         requestedAssetId: 2,
         requestedAssetName: "Samsung A1",
-        submissionDate: "2020-06-19"
+        submissionDate: "2020-06-19",
+        requestDate:"2020-06-01"
       }
     ];
     const assetHistory = [
       {
-        id: 1, assetId: 1, assetName: 'Samsung A3', activity: 'Added', activityDate: 'Thu Jan 02 2020 05:30:00 GMT+0530 (India Standard Time)',
+        id: 1, assetId: 1, assetName: 'Samsung A3', activity: 'Added', activityDate: 'Thu Jan 02 2020 12:00:00 GMT+0530 (India Standard Time)',
       },
       {
-        id: 2, assetId: 2, assetName: 'Samsung A1', activity: 'Added', activityDate: 'Thu Jan 02 2020 05:30:00 GMT+0530 (India Standard Time)',
+        id: 2, assetId: 2, assetName: 'Samsung A1', activity: 'Added', activityDate: 'Thu Jan 02 2020 12:00:00 GMT+0530 (India Standard Time)',
       },
       {
-        id: 3, assetId: 3, assetName: 'Speaking JS', activity: 'Added', activityDate: 'Thu Jan 02 2020 05:30:00 GMT+0530 (India Standard Time)',
+        id: 3, assetId: 3, assetName: 'Speaking JS', activity: 'Added', activityDate: 'Thu Jan 02 2020 12:00:00 GMT+0530 (India Standard Time)',
       },
       {
-        id: 4, assetId: 4, assetName: 'Python For Everybody', activity: 'Added', activityDate: 'Thu Jan 02 2020 05:30:00 GMT+0530 (India Standard Time)',
+        id: 4, assetId: 4, assetName: 'Python For Everybody', activity: 'Added', activityDate: 'Thu Jan 02 2020 12:00:00 GMT+0530 (India Standard Time)',
       },
       {
-        id: 5, assetId: 5, assetName: 'HP Pavillion', activity: 'Added', activityDate: 'Thu Jan 02 2020 05:30:00 GMT+0530 (India Standard Time)',
+        id: 5, assetId: 5, assetName: 'HP Pavillion', activity: 'Added', activityDate: 'Thu Jan 02 2020 12:00:00 GMT+0530 (India Standard Time)',
       },
       {
-        id: 6, assetId: 6, assetName: 'Dell Insp.', activity: 'Added', activityDate: 'Thu Jan 02 2020 05:30:00 GMT+0530 (India Standard Time)',
+        id: 6, assetId: 6, assetName: 'Dell Insp.', activity: 'Added', activityDate: 'Thu Jan 02 2020 12:00:00 GMT+0530 (India Standard Time)',
       },
       {
         id: 7, assetId: 1, assetName: 'Samsung A3', activity: 'Assign', activityDate: '2020-06-03T12:59:14.795Z', 

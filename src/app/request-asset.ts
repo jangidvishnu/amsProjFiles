@@ -6,4 +6,5 @@ export interface RequestAsset {
     submissionDate:Date;
     requestStatus:string;
     requestedAssetName:string;
+    requestDate:Date;
 }

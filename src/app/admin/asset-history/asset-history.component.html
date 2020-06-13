@@ -15,7 +15,10 @@
                 <td style="font-weight: bold;">{{ind+1}}</td>
                 <td style="font-weight: bold;">{{hist?.assetName}}</td>
                 <td>{{hist?.activity}}</td>
-                <td>{{hist?.relatedEmployeeName || "N/A"}}</td> 
+                <td *ngIf="hist?.relatedEmployeeName"><a routerLink="/admin-emp/detail/{{hist?.relatedEmployeeId}}" class="employee-link">
+                    {{hist?.relatedEmployeeName}}
+                </a></td> 
+                <td *ngIf="!hist?.relatedEmployeeName">N/A</td> 
                 <td>{{hist?.activityDate | date:'medium'}}</td> 
             </tr>
         </tbody>

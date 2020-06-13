@@ -24,7 +24,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let asset of searchedAssets$ | async ">
+            <tr *ngFor="let asset of searchedAssets$ | async; trackBy:trackById ">
                 <td style="font-weight: bold;">{{asset.id}}</td>
                 <td><a routerLink="/admin-asset/detail/{{asset.id}}" class="asset-link">
                         {{asset.assetName}}
@@ -34,16 +34,18 @@
                     [class]="{'bg-success':asset.status=='Available','bg-danger':asset.status=='Assigned','bg-info':asset.status=='On Repair'}">
                     {{asset.status}}</td>
             </tr>
-            <tr *ngFor="let asset of assets">
-                <td style="font-weight: bold;">{{asset.id}}</td>
-                <td><a routerLink="/admin-asset/detail/{{asset.id}}" class="asset-link">
-                        {{asset.assetName}}
-                    </a></td>
-                <td>{{asset.assetCategory}}</td>
-                <td
-                    [class]="{'bg-success':asset.status=='Available','bg-danger':asset.status=='Assigned','bg-secondary':asset.status=='On Repair'}">
-                    {{asset.status}}</td>
-            </tr>
+            <ng-container *ngIf="searchBox.value==''">
+                <tr *ngFor="let asset of assets;index as i; trackBy:trackById">
+                    <td style="font-weight: bold;">{{asset.id}}</td>
+                    <td><a routerLink="/admin-asset/detail/{{asset.id}}" class="asset-link">
+                            {{asset.assetName}}
+                        </a></td>
+                    <td>{{asset.assetCategory}}</td>
+                    <td
+                        [class]="{'bg-success':asset.status=='Available','bg-danger':asset.status=='Assigned','bg-secondary':asset.status=='On Repair'}">
+                        {{asset.status}}</td>
+                </tr>
+            </ng-container>
         </tbody>
     </table>
 </div>

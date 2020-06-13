@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { AssetHistory } from './asset-history';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, filter } from 'rxjs/operators';
+import { catchError ,map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +23,17 @@ export class AssetHistoryService {
     let url = this.assetHistoryUrl+'?assetId='+id;
     return this.http.get<AssetHistory[]>(url).
     pipe(
-      filter((result) => {
-        return (result[0]?.id == id);
-      }),
+      map(result => result.filter(
+        assetHistory => assetHistory.assetId==id
+      ) ),
+      catchError(this.errorHandler)
+    );
+  }
+
+  addAssetHistory(assetHist:AssetHistory):Observable<AssetHistory>
+  {
+    return this.http.post<AssetHistory>(this.assetHistoryUrl,assetHist).
+    pipe(
       catchError(this.errorHandler)
     );
   }

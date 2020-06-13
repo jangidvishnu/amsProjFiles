@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Observable, throwError, of, concat } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Mobile } from './assetClasses/mobile';
 import { DesktopPC } from './assetClasses/desktop-pc';
 import { Books } from './assetClasses/books';
@@ -25,6 +25,24 @@ export class AssetService {
   getAssets(): Observable<any[]> {
     return this.http.get<any[]>(this.assetsUrl)
       .pipe(
+        catchError(this.errorHandler)
+      );
+  }
+
+  getOldAssets(): Observable<any[]> {
+    return this.http.get<any[]>(this.assetsUrl)
+      .pipe(
+        map(
+          (result) => {
+            let year = (new Date()).getFullYear();
+            return result.filter(
+              (asset) => {
+                let assetBuyYear: number = (new Date(asset.buyDate)).getFullYear();
+                return (year - assetBuyYear) >= 5;
+              }
+            )
+          }
+        ),
         catchError(this.errorHandler)
       );
   }
@@ -58,25 +76,65 @@ export class AssetService {
     );
   }
 
-  searchAsset(term: string): Observable<any> {
+  searchAsset(term: string): Observable<any[]> {
     if (!term.trim()) {
       return of([]);
     }
-    return this.http.get<any[]>(`${this.assetsUrl}/?assetName=${term}`).pipe(
-      catchError(this.errorHandler)
-    );
+    return this.http.get<any[]>(this.assetsUrl)
+      .pipe(
+        map((result) => {
+          return result.filter(
+            (asset) => {
+              return (asset.assetName.toLowerCase().includes(term.toLowerCase()) ||
+                asset.assetCategory.toLowerCase().includes(term.toLowerCase()) ||
+                asset.status.toLowerCase().includes(term.toLowerCase()) ||
+                String(asset.id).includes(term));
+            }
+          )
+        }),
+        catchError(this.errorHandler)
+      );
   }
 
-  searchAssetByCategory(term: string): Observable<any> {
+  searchOldAsset(term: string): Observable<any[]> {
     if (!term.trim()) {
       return of([]);
     }
-    return concat(this.http.get<any>(this.assetsUrl, {
-      params: new HttpParams({ fromString: `assetCategory=${term}&status=Available` })
-    }), this.http.get<any>(this.assetsUrl, {
-      params: new HttpParams({ fromString: `assetName=${term}&status=Available` })
-    })).pipe(
-      catchError(this.errorHandler)
-    );
+    return this.http.get<any[]>(this.assetsUrl)
+      .pipe(
+        map((result) => {
+          let year = (new Date()).getFullYear();
+          return result.filter(
+            (asset) => {
+              let assetBuyYear: number = (new Date(asset.buyDate)).getFullYear();
+              return (asset.assetName.toLowerCase().includes(term.toLowerCase()) ||
+                asset.assetCategory.toLowerCase().includes(term.toLowerCase()) ||
+                asset.status.toLowerCase().includes(term.toLowerCase()) ||
+                String(asset.id).includes(term) || String(asset.buyDate).includes(term)) &&
+                ((year - assetBuyYear) >= 5);
+            }
+          )
+        }),
+        catchError(this.errorHandler)
+      );
+  }
+
+  searchAvailableAsset(term: string): Observable<any> {
+    if (!term.trim()) {
+      return of([]);
+    }
+    return this.http.get<any>(this.assetsUrl)
+      .pipe(
+        map((result) => {
+          return result.filter(
+            (asset) => {
+              return (asset.assetName.toLowerCase().includes(term.toLowerCase()) ||
+                asset.assetCategory.toLowerCase().includes(term.toLowerCase())) &&
+                (asset.status == "Available");
+            }
+          )
+        }),
+        catchError(this.errorHandler)
+      );
   }
 }

@@ -38,7 +38,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let asset of assetList; index as i">
+            <tr *ngFor="let asset of assetList; index as i ; trackBy:trackById">
                 <td>{{i+1}}</td>
                 <td><a class="asset-link" routerLink="/admin-asset/detail/{{asset.id}}">{{asset.assetName}}</a>
                 </td>
@@ -123,7 +123,7 @@
                         <div class="input-group input-group-sm ">
                             <input type="text" #searchBox id="search-box" aria-label="Sizing example input"
                                 aria-describedby="inputGroup-sizing-sm" class="form-control"
-                                placeholder="Search by Name/Category" (input)="search(searchBox.value)" />
+                                placeholder="Search Asset" (input)="search(searchBox.value)" />
                         </div>
 
                         <!--   ------------ Search Result List -----------   -->
@@ -149,7 +149,7 @@
                 <form (ngSubmit)="assignAsset()" [formGroup]="assignAssetForm">
                     <div class="form-group">
                         <label for="sub-date" class="col-form-label">Submission Date:</label>
-                        <input type="date" formControlName="submissionDateInput" id="sub-date" class="form-control">
+                        <input type="date" formControlName="submissionDateInput" id="sub-date" [min]="getTodayDate()" class="form-control">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

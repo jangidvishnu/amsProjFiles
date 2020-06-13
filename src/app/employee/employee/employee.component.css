@@ -38,14 +38,15 @@
 
 .info-line {
     margin-bottom: 5px;
-    font-size: 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
     background-color: #f6f6f6;
     display: inline-block;
     border-radius: 2px;
 }
 
 .name-label {
-    font-size: 1.5rem;
+    font-size: 1rem;
     background-color: transparent;
 }
 

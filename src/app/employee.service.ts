@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Employee } from './employee'
 import { Observable, of, throwError } from 'rxjs'
-import { catchError, filter } from 'rxjs/operators';
-import { ToastrService } from 'ngx-toastr';
-import { LoginService } from './login.service';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +10,7 @@ import { LoginService } from './login.service';
 export class EmployeeService {
 
   constructor(
-    private http: HttpClient, private toastr: ToastrService,private loginService:LoginService
+    private http: HttpClient
   ) { }
 
   private employeesUrl = 'api/employees';
@@ -37,16 +35,16 @@ export class EmployeeService {
         catchError(this.errorHandler)
       );
   }
+
   getEmployee(email: string, pass: string): Observable<Employee[]> {
     let emailUpdated: string = email.split('@')[0];
     let url = this.employeesUrl + `?emailid=` + emailUpdated + `&pass=` + pass;
     return this.http.get<Employee[]>(url)
       .pipe(
-        filter((resultEmp) => {
-          if (!this.loginService.ifSomebodyLoggedIn()&&(resultEmp == []|| resultEmp[0]?.emailid != email || resultEmp[0]?.pass != pass)) {
-            this.toastr.error("Wrong Credentials","Login Error",{closeButton:true});
-          }
-          return (resultEmp[0]?.emailid == email) && (resultEmp[0]?.pass == pass)
+        map((result) => {
+          return result.filter(
+            emp => emp.emailid == email && emp.pass == pass
+          )
         }),
         catchError(this.errorHandler)
       );
@@ -70,10 +68,19 @@ export class EmployeeService {
 
   searchEmployees(term: string): Observable<Employee[]> {
     if (!term.trim()) {
-      // if not search term, return empty hero array.
       return of([]);
     }
-    return this.http.get<Employee[]>(`${this.employeesUrl}/?name=${term}`).pipe(
+    return this.http.get<Employee[]>(this.employeesUrl).pipe(
+      map(
+        (result) => {
+          return result.filter(
+            (employee) => {
+              return employee.name.toLowerCase().includes(term.toLowerCase()) ||
+                employee.id.toString().includes(term);
+            }
+          )
+        }
+      ),
       catchError(this.errorHandler)
     );
   }

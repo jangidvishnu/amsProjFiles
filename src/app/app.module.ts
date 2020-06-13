@@ -14,12 +14,16 @@ import { EmployeeModule } from './employee/employee.module';
 import { EmployeeRoutingModule } from './employee/employee-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { AssetListComponent } from './asset-list/asset-list.component';
+import { OldAssetListComponent } from './old-asset-list/old-asset-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     PagenotfoundComponent,
+    AssetListComponent,
+    OldAssetListComponent,
   ],
   imports: [
     ReactiveFormsModule,

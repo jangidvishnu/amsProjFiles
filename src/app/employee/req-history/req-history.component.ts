@@ -20,14 +20,12 @@ export class ReqHistoryComponent implements OnInit {
   ngOnInit(): void {
     this.requestAssetService.getRequestsOfEmp(this.id).subscribe(
       reqs => {
-        if (reqs[0]) {
-          for (let req of reqs) {
-            if (req?.requestEmployeeId == this.id) {
-              this.requests.push(req);
-            }
-          }
-        }
+       reqs.reverse();
+       this.requests=reqs;
       }
     );
+  }
+  trackById(index:number,request:RequestAsset):number{
+    return request?.id;
   }
 }

@@ -10,6 +10,8 @@ import { DesktopPC } from 'src/app/assetClasses/desktop-pc';
 import { EmployeeService } from 'src/app/employee.service';
 import { AdminComponent } from '../admin/admin.component';
 import { ToastrService } from 'ngx-toastr';
+import { AssetHistoryService } from 'src/app/asset-history.service';
+import { AssetHistory } from 'src/app/asset-history';
 
 @Component({
   selector: 'app-requests',
@@ -25,7 +27,8 @@ export class RequestsComponent implements OnInit {
 
 
   constructor(private requestAssetService: RequestAssetService, private toastr: ToastrService,
-    private assetService: AssetService, private employeeService: EmployeeService) { }
+    private assetService: AssetService, private employeeService: EmployeeService,
+    private assetHistoryService: AssetHistoryService) { }
 
   ngOnInit(): void {
     //  Get all requests
@@ -34,7 +37,10 @@ export class RequestsComponent implements OnInit {
 
   private getRequestsList() {
     this.requestAssetService.getRequests().subscribe(
-      req => this.requests = req
+      (req) => {
+        req.reverse();
+        this.requests = req;
+      }
     );
   }
 
@@ -59,26 +65,40 @@ export class RequestsComponent implements OnInit {
     let subdate: Date = this.activeRequest.submissionDate;
     let issdate = new Date();
     // change the asset parameters and update asset
-    this.activeRequestedAsset.issueDate = issdate;
-    this.activeRequestedAsset.submissionDate = new Date(subdate);
-    this.activeRequestedAsset.issuedEmployeeName = this.activeRequestEmployee.name;
-    this.activeRequestedAsset.issuedEmployeeId = this.activeRequestEmployee.id;
-    this.activeRequestedAsset.status = "Assigned";
-    this.assetService.updateAsset(this.activeRequestedAsset).subscribe();
-    // update employee and assigned assets
-    this.activeRequestEmployee.assignedAssets.push(this.activeRequestedAsset);
-    this.employeeService.updateEmployee(this.activeRequestEmployee).subscribe();
-    // update request
-    this.activeRequest.requestStatus = "Accepted";
-    this.requestAssetService.updateRequest(this.activeRequest).subscribe();
-    this.toastr.success("Request Accepted","",{closeButton:true});
-    // get updated Requests again
-    this.getRequestsList();
+    if (this.activeRequestedAsset.status != "Available") {
+      this.toastr.error("This Asset is Already Assigned to Somebody", "", { closeButton: true });
+    }
+    else {
+      this.activeRequestedAsset.issueDate = issdate;
+      this.activeRequestedAsset.submissionDate = new Date(subdate);
+      this.activeRequestedAsset.issuedEmployeeName = this.activeRequestEmployee.name;
+      this.activeRequestedAsset.issuedEmployeeId = this.activeRequestEmployee.id;
+      this.activeRequestedAsset.status = "Assigned";
+      this.assetService.updateAsset(this.activeRequestedAsset).subscribe();
+      // Add history
+      this.assetHistoryService.addAssetHistory({
+        assetId: this.activeRequestedAsset.id, assetName: this.activeRequestedAsset.assetName, relatedEmployeeId: this.activeRequestEmployee.id,
+        relatedEmployeeName: this.activeRequestEmployee.name,
+        activityDate: issdate, activity: 'Assigned(Req.)'
+      } as AssetHistory).subscribe();
+      // update employee and assigned assets
+      this.activeRequestEmployee.assignedAssets.push(this.activeRequestedAsset);
+      this.employeeService.updateEmployee(this.activeRequestEmployee).subscribe();
+      // update request
+      this.activeRequest.requestStatus = "Accepted";
+      this.requestAssetService.updateRequest(this.activeRequest).subscribe();
+      this.toastr.success("Request Accepted", "", { closeButton: true });
+      // get updated Requests again
+      this.getRequestsList();
+      AdminComponent.setRequestCount(this.requests.length - 1);
+    }
     //reset all parameters
+
     this.activeRequest = undefined;
     this.activeRequestEmployee = undefined;
     this.activeRequestedAsset = undefined;
-    AdminComponent.setRequestCount(this.requests.length - 1);
+
+
   }
 
   resetAcceptPara() {   //reset all active request params
@@ -102,7 +122,7 @@ export class RequestsComponent implements OnInit {
   rejectRequest() {
     this.activeRequest.requestStatus = "Rejected";
     this.requestAssetService.updateRequest(this.activeRequest).subscribe();
-    this.toastr.success("Request rejected","",{closeButton:true});
+    this.toastr.success("Request rejected", "", { closeButton: true });
     // get updated Requests again
     this.getRequestsList();
     //reset param after rejection
@@ -110,4 +130,7 @@ export class RequestsComponent implements OnInit {
     AdminComponent.setRequestCount(this.requests.length - 1);
   }
 
+  trackById(index: number, request: RequestAsset):number {
+    return request?.id;
+  }
 }

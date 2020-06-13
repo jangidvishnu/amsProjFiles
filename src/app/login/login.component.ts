@@ -58,6 +58,9 @@ export class LoginComponent implements OnInit {
   private isEmployee(email: string, pass: string) {
     this.employeeService.getEmployee(email, pass)
       .subscribe(emp => {
+        if (!this.loginService.ifSomebodyLoggedIn() && emp[0]==undefined ){
+          this.toastr.error("Wrong Credentials", "Login Error", { closeButton: true });
+        }
         if (emp[0] != undefined) {
           this.loginService.login('employeeid' + emp[0].id);
           AppComponent.setLoginStatus();

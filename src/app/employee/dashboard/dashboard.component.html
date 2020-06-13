@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let asset of assetList; index as ind">
+            <tr *ngFor="let asset of assetList; index as ind ; trackBy:trackById">
                 <td style="font-weight: bold;">{{ind+1}}</td>
                 <td>{{asset?.assetName}}</td>
                 <td>{{asset?.issueDate | date:'medium'}}</td>
@@ -49,12 +49,12 @@
                         <div class="input-group input-group-sm ">
                             <input type="text" #searchBox id="search-box" aria-label="Sizing example input"
                                 aria-describedby="inputGroup-sizing-sm" class="form-control"
-                                placeholder="Search by Name/Category" (input)="search(searchBox.value)" />
+                                placeholder="Search Asset" (input)="search(searchBox.value)" />
                         </div>
 
                         <!--   ------------ Search Result List -----------   -->
                         <ul class="search-result">
-                            <li *ngFor="let asset of searchedAssets$ | async">
+                            <li *ngFor="let asset of searchedAssets$ | async; trackBy:trackById">
                                 <a routerLink="/admin-asset/detail/{{asset.id}}">
                                     {{asset.assetName}}
                                 </a>
@@ -75,7 +75,8 @@
                 <form (ngSubmit)="requestAsset()" [formGroup]="requestAssetForm">
                     <div class="form-group">
                         <label for="sub-date" class="col-form-label">Submission Date:</label>
-                        <input type="date" formControlName="submissionDateInput" id="sub-date" class="form-control">
+                        <input type="date" formControlName="submissionDateInput" id="sub-date" [min]="getTodayDate()"
+                            class="form-control">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

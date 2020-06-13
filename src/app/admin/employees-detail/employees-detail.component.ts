@@ -64,5 +64,8 @@ export class EmployeesDetailComponent implements OnInit {
   search(term: string): void {
     this.searchTerms.next(term);
   }
+  trackById(index:number,employee:Employee):number{
+    return employee?.id;
+  }
   
 }

@@ -1,10 +1,16 @@
 <nav class="navbar navbar-expand-sm navbar-light ">
-    <a class="navbar-brand">AMS</a>
+    <a class="navbar-brand" routerLink="">AMS</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" routerLink="assets">Asset List</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" routerLinkActive="active" routerLink="oldAssets">Old Asset List</a>
+          </li>
         </ul>
         <button *ngIf="getLoginStatus()=='loggedin'" class="btn btn-outline-danger my-2 my-sm-0 float-right" (click)="logout()">Logout</button>
     </div>
