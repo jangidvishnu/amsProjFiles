@@ -36,6 +36,21 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.getEmployeeById(this.id)
       .subscribe(emp => {
         this.employee = emp;
+        for(let asset of emp.assignedAssets){
+          let today = new Date();
+          let sbmtDate :Date = new Date(asset.submissionDate);
+          let Difference_In_Days = (sbmtDate.getTime()-today.getTime()) / (1000 * 3600 * 24);
+          if(Difference_In_Days<=2 && Difference_In_Days>=1){
+            this.toastr.info("1 Day left to submit "+asset.assetName,"Remainder",{closeButton:true});
+          }
+          else if(Difference_In_Days<=1 && Difference_In_Days>=0)
+          {
+            this.toastr.info("few hours left to submit "+asset.assetName,"Remainder",{closeButton:true});
+          }
+          else if(Difference_In_Days<0){
+            this.toastr.error("Overdue Submission of "+asset.assetName,"Remainder",{closeButton:true});
+          }
+        }
       });
   }
 }
